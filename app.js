@@ -3,25 +3,19 @@ var http = require('http');
 var path = require('path');
 var mongoose = require('mongoose');
 var fs = require('fs');
+var config = require('./config.json');
 
 var app = express();
 
-mongoose.connect('mongodb://localhost/hack-productivity');
+mongoose.connect('mongodb://' + config.test)
+
+//Including all the routes
+require('./routes/index')(app, mongoose);
+
 
 ///Load all files in models dir
 fs.readdirSync(__dirname + '/models').forEach(function(filename) {
   if (~filename.indexOf('.js')) require(__dirname + '/models/' + filename)
-});
-
-//Get users
-app.get('/users', function(req, res) {
-  mongoose.model('users').find(function(err, users) {
-    res.send(users);
-  });
-});
-
-app.get('/', function (req, res) {
-  res.send('Hello World!');
 });
 
 app.listen(3000, function () {
