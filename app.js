@@ -14,9 +14,8 @@ require('./routes/index')(app, mongoose);
 
 
 ///Load all files in models dir
-fs.readdirSync(__dirname + '/models').forEach(function(filename) {
-  if (~filename.indexOf('.js')) require(__dirname + '/models/' + filename)
-});
+//Use `require()` whenever importing code
+//var User = require('./models/user');
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!');

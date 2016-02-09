@@ -1,5 +1,5 @@
 module.exports = function(app, mongoose){
-
+  var User = require('../models/User');
   //Home page
   app.get('/', function (req, res) {
     res.send('Hello World!');
@@ -7,7 +7,7 @@ module.exports = function(app, mongoose){
 
   //Get users
   app.get('/user', function(req, res) {
-    mongoose.model('user').find(function(err, users) {
+    User.find(function(err, users) {
       res.send(users);
     });
   });
