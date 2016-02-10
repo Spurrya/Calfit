@@ -13,17 +13,17 @@ module.exports = function(router, mongoose){
     });
   });
 
-
-  function createNewUser(){
+  function createNewUser(name, email, chromeId){
     var user = new User({
-      name : 'something',
-      email : 'somethingelse',
-      chromeId : 'whatever'
+      name :  name,
+      email : email,
+      chromeId : chromeId
     });
-  user.save(callback);
+  user.save(user);
   }
 
   router.param('user_id', function(req, res, next, id) {
+    createNewUser("test","test","test")
     next();
   });
 
@@ -35,10 +35,10 @@ module.exports = function(router, mongoose){
   })
   //Finds the user by id and returns that user
   .get(function(req, res, next) {
-    User.findById(req.params.id, function(err, user) {
+    User.findById(req.params.user_id, function(err, user) {
     if (err)
         res.send(err);
-    res.json(user);
+    res.json({user: user});
   })
   })
   .put(function(req, res, next) {
