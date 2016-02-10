@@ -13,24 +13,17 @@ module.exports = function(router, mongoose){
     });
   });
 
+
+  function createNewUser(){
+    var user = new User({
+      name : 'something',
+      email : 'somethingelse',
+      chromeId : 'whatever'
+    });
+  user.save(callback);
+  }
+
   router.param('user_id', function(req, res, next, id) {
-
-    //var user = new User();
-    // sample user, would actually fetch from DB, etc...
-    // req.user = {
-    //   id: 2271,
-    //   name: 'TestUser',
-    //   email: 'test@test.com',
-    //   chromeId: 0043
-    // };
-
-  // save the user and check for errors
-    // user.save(function(err) {
-    //     if (err)
-    //         res.send(err);
-    //
-    //     res.json({ message: 'User created!' });
-    // });
     next();
   });
 
@@ -53,9 +46,6 @@ module.exports = function(router, mongoose){
     req.user.name = req.params.name;
     // save user ... etc
     res.json(req.user);
-  })
-  .post(function(req, res, next) {
-    next(new Error('not implemented'));
   })
   .delete(function(req, res, next) {
     next(new Error('not implemented'));
