@@ -13,19 +13,29 @@ module.exports = function(router, mongoose){
     });
   });
 
-  function createNewUser(name, email, chromeId){
-    var user = new User({
-      name :  name,
-      email : email,
-      chromeId : chromeId
-    });
-  user.save(user);
-  }
+
 
   router.param('user_id', function(req, res, next, id) {
-    createNewUser("test","test","test")
     next();
   });
+
+router.route('/users')
+// create a user accessed at POST http://localhost:8080/api/users)
+.post(function(req, res) {
+    var user = new User({
+      name :  req.body.name,
+      email : req.body.email,
+      chromeId : req.body.chromeId
+    });
+
+  //user.save(user);
+  user.save(function(err) {
+      if (err)
+          res.send(err);
+
+      res.json({ message: 'Bear created!' });
+  });
+});
 
   // Getting, setting and deleting users
   router.route('/users/:user_id')
