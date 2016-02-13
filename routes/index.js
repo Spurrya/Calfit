@@ -13,7 +13,6 @@ router.get('/users/', function(req, res) {
   });
 });
 
-
 router.param('user_id', function(req, res, next, id) {
   next();
 });
