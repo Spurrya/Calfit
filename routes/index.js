@@ -33,7 +33,7 @@ router.route('/users')
       if (err)
           res.send(err);
 
-      res.json({ message: 'Bear created!' });
+      res.json({ message: 'User created!' });
   });
 });
 
