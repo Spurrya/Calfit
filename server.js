@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var config = require('./config.json');
 var bodyParser = require('body-parser');
 var app = express();
-mongoose.connect('mongodb://' + config.test)
+mongoose.connect('mongodb://user1:user1@ds059145.mongolab.com:59145/yofitdb')
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
