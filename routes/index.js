@@ -55,13 +55,11 @@ router.route('/users/:user_id')
 })
 .delete(function(req, res) {
     // delete the user with this id (accessed at DELETE http://localhost:8080/api/bears/:user_id)
-
   User.remove({
       _id: req.params.user_id
   }, function(err, bear) {
       if (err)
           res.send(err);
-
       res.json({ message: 'Successfully deleted' });
   });
 });

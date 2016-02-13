@@ -1,0 +1,4 @@
+{
+  "test": "localhost/hack-productivity",
+  "hostedDatabase": "user1:user1@ds059145.mongolab.com:59145/yofitdb"
+}
