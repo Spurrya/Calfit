@@ -1,7 +1,7 @@
 {
-  "name": "hack-productivity",
+  "name": "CalFit",
   "version": "1.0.0",
-  "description": "",
+  "description": "Backend of the chrome extension to keep you fit and moving!",
   "main": "index.js",
   "dependencies": {
     "body-parser": "^1.14.2",
