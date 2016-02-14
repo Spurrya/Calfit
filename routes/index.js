@@ -1,10 +1,6 @@
 module.exports = function(router, mongoose){
   var User = require('../models/User');
 
-//Testing welcome message
-router.get('/', function(req, res) {
-    res.json({ message: 'hooray! welcome to our api!' });
-});
 
 //Get list of all the users from the database
 router.get('/users/', function(req, res) {
