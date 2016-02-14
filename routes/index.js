@@ -2,7 +2,7 @@ module.exports = function(router, mongoose){
   var User = require('../models/User');
 
 router.get('/', function(req, res){
-  res.json({message: 'sup?'})
+  res.json({message: 'If you see this, dont panic its working'});
 })
 //Get list of all the users from the database
 router.get('/users/', function(req, res) {
