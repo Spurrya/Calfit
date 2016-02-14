@@ -97,7 +97,7 @@ graph.createEvent = function (token, users) {
   }
 };
 
-graph.getEvents = function (token , users) {
+graph.getEvents = function (token , users, res) {
   var deferred = Q.defer();
 
   // Make a request to get all users in the tenant. Use $select to only get
@@ -117,7 +117,8 @@ graph.getEvents = function (token , users) {
     } else  {
       // calendar default url : https://graph.microsoft.com/v1.0/users/958c3530-8ea4-43b9-bb0e-5f168f82aff3/calendar
       // data is responce.body
-      console.log(response.body);
+      //console.log(response.body);
+      res.json({message: JSON.parse(response.body)})
     }
   });
 
