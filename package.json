@@ -2,7 +2,7 @@
   "name": "CalFit",
   "version": "1.0.0",
   "description": "Backend of the chrome extension to keep you fit and moving!",
-  "main": "index.js",
+  "main": "server.js",
   "dependencies": {
     "body-parser": "^1.14.2",
     "express": "^4.13.4",
