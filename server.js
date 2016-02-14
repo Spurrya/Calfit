@@ -1,36 +1,43 @@
 var express = require('express');
 var mongoose = require('mongoose');
-//var config = require('./config.json');
+var config = require('./config');
 var bodyParser = require('body-parser');
-//var authContext = require('adal-node').AuthenticationContext;
-//var request = require('ajax-request');
-//var authHelper = require('./authHelper.js');
-//var requestUtil = require('./requestUtil.js')
-//var cookieParser = require('cookie-parser');
-//var session = require('express-session')
-//var logger = require('morgan');
+var auth = require('./auth');
+var graph = require('./graph');
+
 
 var app = express();
 
-mongoose.connect('mongodb://user1:user1@ds059145.mongolab.com:59145/yofitdb')
-//app.use(cookieParser());
+mongoose.connect(config.hostedDatabase);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
-// app.use(session({
-//   secret: '12345QWERTY-SECRET',
-//   name: 'nodecookie',
-//   resave: false,
-//   saveUninitialized: false
-// }));
 
 var port = process.env.PORT || 3000;
 var router = express.Router();
 
 require('./routes/index')(router, mongoose);
-//require('./routes/calendar')(router,mongoose, authHelper, requestUtil);
 
 
 app.use('/api', router);
 app.listen(port);
 console.log('Magic happens on port ' + port);
+
+
+// Get an access token for the app.
+auth.getAccessToken().then(function (token) {
+  // Get all of the users in the tenant.
+  graph.getUsers(token)
+    .then(function (users) {
+      // Create an event on each user's calendar.
+      graph.createEvent(token, users);
+    }, function (error) {
+      console.error('>>> Error getting users: ' + error);
+    }).then(function (users) {
+      // Get calendar events for users
+      graph.getEvents(token, users);
+    }, function (error) {
+      console.error('>>> Error getting calendar events for users: ' + error);
+    });
+}, function (error) {
+  console.error('>>> Error getting access token: ' + error);
+});
