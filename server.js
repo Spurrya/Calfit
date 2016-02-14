@@ -12,10 +12,17 @@ var logger = require('morgan');
 
 var app = express();
 
-mongoose.connect('mongodb://' + config.hostedDatabase)
+mongoose.connect('mongodb://user1:user1@ds059145.mongolab.com:59145/yofitdb')
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+app.use(session({
+  secret: '12345QWERTY-SECRET',
+  name: 'nodecookie',
+  resave: false,
+  saveUninitialized: false
+}));
 
 var port = process.env.PORT || 3000;
 var router = express.Router();

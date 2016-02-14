@@ -7,8 +7,7 @@ module.exports = function(router, mongoose , authHelper, requestUtil){
           if (token !== null) {
              res.cookie(authHelper.TOKEN_CACHE_KEY, token.refreshToken);
              res.cookie(authHelper.TENANT_CACHE_KEY, token.tenantId);
-
-            res.json({message:token});
+             res.json({message:token});
           }
           else {
             console.log("AuthHelper failed to acquire token");
@@ -18,7 +17,7 @@ module.exports = function(router, mongoose , authHelper, requestUtil){
         });
       }
       else {
-        res.json({message:'ERROR!!!!'})
+        //res.render('login', { auth_url: authHelper.getAuthUrl() });
       }
     }
     else {
