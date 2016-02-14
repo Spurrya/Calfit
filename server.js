@@ -8,7 +8,7 @@ var graph = require('./graph');
 
 var app = express();
 
-mongoose.connect(config.hostedDatabase);
+mongoose.connect('mongodb://user1:user1@ds059145.mongolab.com:59145/yofitdb');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
