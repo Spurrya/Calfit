@@ -17,7 +17,6 @@ var router = express.Router();
 
 require('./routes/index')(router, mongoose);
 
-
 app.use('/api', router);
 app.listen(port);
 console.log('Magic happens on port ' + port);
@@ -29,7 +28,8 @@ auth.getAccessToken().then(function (token) {
   graph.getUsers(token)
     .then(function (users) {
       // Create an event on each user's calendar.
-      graph.createEvent(token, users);
+      //Uncomment when you want to create a new event in the API
+      //graph.createEvent(token, users);
     }, function (error) {
       console.error('>>> Error getting users: ' + error);
     }).then(function (users) {
