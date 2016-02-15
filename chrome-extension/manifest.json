@@ -1,0 +1,13 @@
+{
+  "name": "Fun Breaks",
+  "description": "Chrome platform app.",
+  "manifest_version": 2,
+  "version": "0.1",
+  "app": {
+    "background": {
+      "scripts": ["background.js"]
+    }
+  },
+  "permissions": ["gcm", "storage", "notifications"],
+  "icons": { "128": "images.png" }
+}

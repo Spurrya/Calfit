@@ -118,7 +118,19 @@ graph.getEvents = function (token , users, res) {
       // calendar default url : https://graph.microsoft.com/v1.0/users/958c3530-8ea4-43b9-bb0e-5f168f82aff3/calendar
       // data is responce.body
       //console.log(response.body);
-      res.json({message: JSON.parse(response.body)})
+
+      var value = JSON.parse(response.body);
+      console.log(value);
+      // var updatedValue =[]
+      // value.forEach(function(calItem){
+      //   var obj ={
+      //     start : calItem.start,
+      //     end : calItem.end
+      //   };
+      //
+      //   updatedValue.push(obj);
+      // });
+       res.json({message: value})
     }
   });
 
