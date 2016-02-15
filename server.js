@@ -16,6 +16,8 @@ var router = express.Router();
 
 require('./routes/index')(router, mongoose);
 require('./routes/calendar')(router, mongoose, auth, graph);
+require('./routes/activities')(router, mongoose);
+require('./routes/skype')(router, mongoose);
 
 app.use('/api', router);
 app.listen(port);
