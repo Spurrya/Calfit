@@ -116,9 +116,6 @@ graph.getEvents = function (token , users, res) {
       deferred.reject(err);
     } else  {
       // calendar default url : https://graph.microsoft.com/v1.0/users/958c3530-8ea4-43b9-bb0e-5f168f82aff3/calendar
-      // data is responce.body
-      //console.log(response.body);
-
       var value = JSON.parse(response.body).value;
       var updatedValue =[]
       value.forEach(function(calItem){

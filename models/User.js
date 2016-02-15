@@ -9,7 +9,7 @@ var userSchema = new Schema({
   id: Number,
   name: String,
   email : String,
-  chromeId : Number
+  chromeId : String
 });
 
 var User = mongoose.model('User', userSchema);
