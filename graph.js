@@ -119,18 +119,17 @@ graph.getEvents = function (token , users, res) {
       // data is responce.body
       //console.log(response.body);
 
-      var value = JSON.parse(response.body);
-      console.log(value);
-      // var updatedValue =[]
-      // value.forEach(function(calItem){
-      //   var obj ={
-      //     start : calItem.start,
-      //     end : calItem.end
-      //   };
-      //
-      //   updatedValue.push(obj);
-      // });
-       res.json({message: value})
+      var value = JSON.parse(response.body).value;
+      var updatedValue =[]
+      value.forEach(function(calItem){
+        var obj ={
+          start : calItem.start,
+          end : calItem.end
+        };
+
+        updatedValue.push(obj);
+      });
+       res.json({events: updatedValue})
     }
   });
 
