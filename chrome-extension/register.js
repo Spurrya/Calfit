@@ -28,7 +28,7 @@ function registerofficeuser() {
 	};
 	xhttp.open("POST", "http://calfit.azurewebsites.net/api/users", true);
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xhttp.send("__v="+ varRegisteruserid + "&_id=" + registrationId + "&name=" + varNameId );
+	xhttp.send("email="+ varRegisteruserid + "&chromeId=" + registrationId + "&name=" + varNameId );
 }
 
 function registerCallback(regId) {
@@ -76,7 +76,7 @@ function updateCurlCommand() {
 	  ' -H "Content-Type: application/x-www-form-urlencoded;charset=UTF-8" \n' +
 	  ' -d "registration_id=' + registrationId + '" \n' +
 	   ' -d data.' + msgKey + '=' + msgValue + '';
-	  
+
   document.getElementById("console").innerText = command;
 }
 
