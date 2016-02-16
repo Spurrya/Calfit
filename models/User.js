@@ -6,7 +6,7 @@ var Schema = mongoose.Schema;
 //Creating a user model which will take name, email and the
 //chrome browser identification string
 var userSchema = new Schema({
-  id: Number,
+  officeId: String,
   name: String,
   email : String,
   chromeId : String

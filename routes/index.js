@@ -19,6 +19,7 @@ router.route('/users')
 // create a user accessed at POST http://localhost:8080/api/users)
 .post(function(req, res) {
     var user = new User({
+      officeId: req.body.officeId,
       name : req.body.name,
       email :req.body.email,
       chromeId : req.body.chromeId
@@ -50,7 +51,7 @@ router.route('/users/:user_id')
     res.json(req.user);
 })
 .delete(function(req, res) {
-    // delete the user with this id (accessed at DELETE http://localhost:8080/api/bears/:user_id)
+    // delete the user with this id (accessed at DELETE http://localhost:3000/api/bears/:user_id)
   User.remove({
       _id: req.params.user_id
   }, function(err, bear) {
