@@ -1,12 +1,14 @@
+$(function(){
+  alert('ready!');
+  function register() {
+    var senderId = '597929500512';
+    chrome.gcm.register([senderId], registerCallback);
+    document.getElementById("register").disabled = true;
+  }
 
-function register() {
-  var senderId = '597929500512';
-  chrome.gcm.register([senderId], registerCallback);
-  document.getElementById("register").disabled = true;
-}
-
-function registerofficeuser(chromeId) {
   $("#submit").submit(function(e) {
+    var chromeId = register()
+
     var name = $('#name').val()
     var email = $('#email').val()
     var chromeId = chromeId
@@ -23,16 +25,16 @@ function registerofficeuser(chromeId) {
 
     e.preventDefault();
   });
-}
 
+  function registerCallback(regId) {
+    if (chrome.runtime.lastError) {
+      return;
+    }
+    chrome.storage.local.set({registered: true});
+    return regId;
+   }
+})
 
-function registerCallback(regId) {
-  if (chrome.runtime.lastError) {
-    return;
-  }
-  chrome.storage.local.set({registered: true});
-  registerofficeuser(regId)
- }
 
 
  // OLD CODE FOR REFERENCE
