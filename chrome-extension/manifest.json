@@ -1,6 +1,6 @@
 {
   "name": "Calfit",
-  "description": "Chrome platform app.",
+  "description": "Keep yourself fit and productive by taking breaks based off your calendar schedule.",
   "manifest_version": 2,
   "version": "0.1",
   "app": {
@@ -9,5 +9,5 @@
     }
   },
   "permissions": ["gcm", "storage", "notifications"],
-  "icons": { "128": "images.png" }
+  "icons": { "128": "basketball.png" }
 }

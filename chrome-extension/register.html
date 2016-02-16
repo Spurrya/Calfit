@@ -1,16 +1,46 @@
+<!DOCTYPE html>
 <html>
-
 <head>
-<title>GCM Registration</title>
+<title>CalFit</title>
+<link rel="stylesheet" href="assets/bootstrap.min.css" >
+<link rel="stylesheet" href="assets/login.css">
+<script src="assets/jquery.min.js"></script>
 <script src="register.js"></script>
+
+
 </head>
+<body>
+<div class="container">
+	<div class="row">
+		<h2 align="center">Register</h2>
+	</div>
+	<form id="register-form" action="" method="post" role="form">
+		<div class="form-group">
+			<input type="text" name="name" id="name" tabindex="1" class="form-control" placeholder="Name" value="">
+		</div>
+		<div class="form-group">
+			<input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email Address" value="">
+		</div>
+		<div class="form-group">
+			<div class="row">
+				<div class="col-sm-6 col-sm-offset-3">
+					<input type="submit" name="register-submit" id="submit" tabindex="4" class="form-control btn btn-register" value="Register Now">
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+</body>
+</html>
+
+
+<!--
 
 <body>
 System Input<br/>
 API Key:<input id="apiKey" type="TEXT" size="30" value="AIzaSyBAIqiMZOgr5hpgGzxGAtdkIs-Go8pqAZE"><br/>
 <br/><br/>
 Step 1:<br/>
-Sender ID(Google_API_Project_ID):<input id="senderId" type="TEXT" size="20" value="597929500512"><br/>
 <button id="register">Register Client in GCM</button>
 <br/>
 <div id="regId" style="background-color:grey;padding:5px"></div>
@@ -31,9 +61,11 @@ Step 3:<br/>
 <br/><br/>
 Enter your Message: Key <input id="msgKey" type="TEXT" size="20"> &nbsp; and Value <input id="msgValue" type="TEXT" size="20">
 <br/><br/>
------------------------------------------------------------------------------------------
 <textarea id="console" type="TEXT" readonly style="width:460px;height:210px;"></textarea>
 
 </body>
 
 </html>
+
+
+-->

@@ -6,12 +6,14 @@
 
 var request = require('request');
 var Q = require('q');
+var gcm = require('node-gcm');
 var message = new gcm.Message();
 
 
 // The graph module object.
 var graph = {};
 var regTokens = ['597929500512'];
+//GCM Api key
 var sender = new gcm.Sender('AIzaSyBAIqiMZOgr5hpgGzxGAtdkIs-Go8pqAZE');
 
 
