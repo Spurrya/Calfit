@@ -1,38 +1,37 @@
-$(function(){
-  alert('ready!');
-  function register() {
-    var senderId = '597929500512';
-    chrome.gcm.register([senderId], registerCallback);
-    document.getElementById("register").disabled = true;
+function register() {
+  var senderId = '597929500512';
+  chrome.gcm.register([senderId], registerCallback);
+  document.getElementById("register").disabled = true;
+}
+
+function registerCallback(regId) {
+  if (chrome.runtime.lastError) {
+    return;
   }
+  chrome.storage.local.set({registered: true});
+  return regId;
+ }
 
-  $("#submit").submit(function(e) {
+$(function(){
+
+  $("#register-form").submit(function(e) {
+    debugger
     var chromeId = register()
-
     var name = $('#name').val()
     var email = $('#email').val()
-    var chromeId = chromeId
 
     $.ajax({
-           type: "POST",
-           url: 'calfit.azurewebsites.net/api/users',
-           data: $("#register-form").serialize(),
-           success: function(data)
-           {
-               alert(data);
-           }
-         });
+         type: "POST",
+         url: 'calfit.azurewebsites.net/api/users',
+         data: {chromeId: chromeId, name: name, email:email},
+         success: function(data)
+         {
+             alert(data);
+         }
+       });
 
     e.preventDefault();
   });
-
-  function registerCallback(regId) {
-    if (chrome.runtime.lastError) {
-      return;
-    }
-    chrome.storage.local.set({registered: true});
-    return regId;
-   }
 })
 
 
