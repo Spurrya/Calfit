@@ -1,13 +1,19 @@
 /*
  * Copyright (c) Microsoft All rights reserved. Licensed under the MIT license.
  * See LICENSE in the project root for license information.
+ Edited by: Spurrya Jaggi
  */
 
 var request = require('request');
 var Q = require('q');
+var message = new gcm.Message();
+
 
 // The graph module object.
 var graph = {};
+var regTokens = ['597929500512'];
+var sender = new gcm.Sender('AIzaSyBAIqiMZOgr5hpgGzxGAtdkIs-Go8pqAZE');
+
 
 // @name getUsers
 // @desc Makes a request to the Microsoft Graph for all users in the tenant.
@@ -99,13 +105,7 @@ graph.createEvent = function (token, users) {
 
 graph.getEvents = function (token , users, res) {
   var deferred = Q.defer();
-
-  // Make a request to get all users in the tenant. Use $select to only get
-  // necessary values to make the app more performant.
   request.get('https://graph.microsoft.com/v1.0/users/958c3530-8ea4-43b9-bb0e-5f168f82aff3/calendar/events', {
-    // bhaanu's ID : 958c3530-8ea4-43b9-bb0e-5f168f82aff3
-    // All users calendar body: /users/<id | userPrincipalName>/calendar
-    // All users events : /users/<id | userPrincipalName>/calendar/events
     'auth': {
       'bearer': token
     }
@@ -115,7 +115,6 @@ graph.getEvents = function (token , users, res) {
     if (err) {
       deferred.reject(err);
     } else  {
-      // calendar default url : https://graph.microsoft.com/v1.0/users/958c3530-8ea4-43b9-bb0e-5f168f82aff3/calendar
       var value = JSON.parse(response.body).value;
       var updatedValue =[]
       value.forEach(function(calItem){
@@ -132,5 +131,14 @@ graph.getEvents = function (token , users, res) {
 
   return deferred.promise;
 };
+
+graph.pushNotification = function(){
+  var message = new gcm.Message();
+  message.addData('key1', 'msg1');
+  sender.send(message, { registrationTokens: regTokens }, function (err, response) {
+      if(err) console.error(err);
+      else    console.log(response);
+  });
+}
 
 module.exports = graph;

@@ -17,8 +17,8 @@ function register() {
 
 function registerofficeuser() {
 	setStatus("Registering user....");
-	var varRegisteruserid = document.getElementById("registeruserid").value;
-	var varNameId = document.getElementById("nameId").value;
+	var email = document.getElementById("email").value;
+	var name = document.getElementById("name").value;
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 		setStatus("User details has successfully sent....");
