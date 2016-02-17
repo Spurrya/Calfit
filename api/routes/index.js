@@ -1,4 +1,4 @@
-module.exports = function(router, mongoose){
+module.exports = function(router, mongoose, auth){
   var User = require('../models/User');
 
 router.get('/', function(req, res){
@@ -18,8 +18,12 @@ router.param('user_id', function(req, res, next, id) {
 router.route('/users')
 // create a user accessed at POST http://localhost:8080/api/users)
 .post(function(req, res) {
+
+  // Get an access token for the app.
+  auth.getAccessToken().then(function (token) {
+    console.log(token)
     var user = new User({
-      officeId: req.body.officeId,
+      officeId: token,
       name : req.body.name,
       email :req.body.email,
       chromeId : req.body.chromeId
@@ -29,6 +33,8 @@ router.route('/users')
           res.send(err);
       res.json({ message: 'User created!' });
   });
+  });
+
 });
   // Getting, setting and deleting users
 router.route('/users/:user_id')

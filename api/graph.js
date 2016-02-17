@@ -1,14 +1,13 @@
 /*
  * Copyright (c) Microsoft All rights reserved. Licensed under the MIT license.
  * See LICENSE in the project root for license information.
- Edited by: Spurrya Jaggi
+ * Edited by: Spurrya Jaggi
  */
 
 var request = require('request');
 var Q = require('q');
 var gcm = require('node-gcm');
 var message = new gcm.Message();
-
 
 // The graph module object.
 var graph = {};
@@ -106,32 +105,35 @@ graph.createEvent = function (token, users) {
 };
 
 graph.getEvents = function (token , users, res) {
-  var deferred = Q.defer();
-  request.get('https://graph.microsoft.com/v1.0/users/958c3530-8ea4-43b9-bb0e-5f168f82aff3/calendar/events', {
-    'auth': {
-      'bearer': token
-    }
-  }, function (err, response, body) {
-    var parsedBody = JSON.parse(body);
+  for (var i = 0; i < users.length; i++) {
+    var deferred = Q.defer();
+    //958c3530-8ea4-43b9-bb0e-5f168f82aff3
+    request.get('https://graph.microsoft.com/v1.0/users/'+users[i].id+'/calendar/events', {
+      'auth': {
+        'bearer': token
+      }
+    }, function (err, response, body) {
+      var parsedBody = JSON.parse(body);
 
-    if (err) {
-      deferred.reject(err);
-    } else  {
-      var value = JSON.parse(response.body).value;
-      var updatedValue =[]
-      value.forEach(function(calItem){
-        var obj ={
-          start : calItem.start,
-          end : calItem.end
-        };
+      if (err) {
+        deferred.reject(err);
+      } else  {
+        var value = JSON.parse(response.body).value;
+        var updatedValue =[]
+        value.forEach(function(calItem){
+          var obj ={
+            start : calItem.start,
+            end : calItem.end
+          };
 
-        updatedValue.push(obj);
-      });
-       res.json({events: updatedValue})
-    }
-  });
+          updatedValue.push(obj);
+        });
+         res.json({events: updatedValue})
+      }
+    });
 
-  return deferred.promise;
+    return deferred.promise;
+  }
 };
 
 graph.pushNotification = function(){
