@@ -1,39 +1,42 @@
+registrationId = ""
+
 function register() {
   var senderId = '597929500512';
   chrome.gcm.register([senderId], registerCallback);
-  document.getElementById("register").disabled = true;
 }
 
+
 function registerCallback(regId) {
+  registrationId = regId;
   if (chrome.runtime.lastError) {
-    return;
+    return false;
   }
   chrome.storage.local.set({registered: true});
-  return regId;
  }
 
-$(function(){
 
+$(function(){
   $("#register-form").submit(function(e) {
-    debugger
-    var chromeId = register()
+
+    register()
     var name = $('#name').val()
     var email = $('#email').val()
+    console.log('f');
+    var chromeId = registrationId
 
     $.ajax({
          type: "POST",
-         url: 'calfit.azurewebsites.net/api/users',
+         url: 'http://calfit.azurewebsites.net/api/users',
+         ajax:false,
          data: {chromeId: chromeId, name: name, email:email},
-         success: function(data)
+         success: function(result)
          {
-             alert(data);
+           console.log(result)
          }
        });
 
-    e.preventDefault();
   });
 })
-
 
 
  // OLD CODE FOR REFERENCE

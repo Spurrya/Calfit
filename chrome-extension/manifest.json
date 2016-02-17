@@ -8,6 +8,6 @@
       "scripts": ["background.js"]
     }
   },
-  "permissions": ["gcm", "storage", "notifications"],
+  "permissions": ["gcm", "storage", "notifications", "http://calfit.azurewebsites.net/"],
   "icons": { "128": "basketball.png" }
 }

@@ -20,7 +20,7 @@ function messageReceived(message) {
   // Pop up a notification to show the GCM message.
   chrome.notifications.create(getNotificationId(), {
     title: 'GCM Message',
-    iconUrl: 'productivity.png',
+    iconUrl: 'gcm_128.png',
     type: 'basic',
     message: messageString
   }, function() {});
