@@ -2,10 +2,10 @@
 
 Concept:
 
-Problem we are trying to solve:
+Problems we are trying to solve:
 1. White collar jobs involve lot of sitting. This has lot of negative effects on physical, mental health and most importantly productivity 
 2. Even if employees do workouts after work, research says that it won't balance side effects of sitting long hours
-3. Research says that short workout breaks during orking hours prevents side effects of long hours of sitting and improves productivity, But are not disciplined and don't know how to remind themselves in the right time to do those short workouts
+3. Research says that short workout breaks during orking hours prevents side effects of long hours of sitting and improves productivity, But are not disciplined and don't know how to remind themselves in the right way to do those short workouts
 
 Solution:
 1. Make short workouts part of employee's work routine
