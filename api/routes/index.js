@@ -16,7 +16,7 @@ router.param('user_id', function(req, res, next, id) {
 });
 
 router.route('/users')
-// create a user accessed at POST http://localhost:8080/api/users)
+// create a user accessed at POST http://localhost:3000/api/users)
 .post(function(req, res) {
   // Get an access token for the app.
   auth.getAccessToken().then(function (token) {
