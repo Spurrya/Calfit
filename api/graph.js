@@ -6,15 +6,10 @@
 
 var request = require('request');
 var Q = require('q');
-var gcm = require('node-gcm');
-var message = new gcm.Message();
-var config = require('./config')
 
 // The graph module object.
 var graph = {};
-var regTokens = ['597929500512'];
 //GCM Api key
-var sender = new gcm.Sender(config.gcm);
 
 
 // @name getUsers
@@ -45,33 +40,6 @@ graph.getUsers = function (token) {
 };
 
 
-//STILL WRITING THIS FUNCTION
-// @name createUsers
-// @desc Makes a request to the Microsoft Graph for all users in the tenant.
-graph.createUser = function (token) {
-  var deferred = Q.defer();
-
-  // Make a request to get all users in the tenant. Use $select to only get
-  // necessary values to make the app more performant.
-  request.get('https://graph.microsoft.com/v1.0/users?$select=id,displayName', {
-    'auth': {
-      'bearer': token
-    }
-  }, function (err, response, body) {
-    var parsedBody = JSON.parse(body);
-
-    if (err) {
-      deferred.reject(err);
-    } else if (parsedBody.error) {
-      deferred.reject(parsedBody.error.message);
-    } else {
-      // The value of the body will be an array of all users.
-      deferred.resolve(parsedBody.value);
-    }
-  });
-
-  return deferred.promise;
-};
 
 // @name createEvent
 // @desc Creates an event on each user's calendar.
@@ -134,11 +102,10 @@ graph.createEvent = function (token, users) {
   }
 };
 
-graph.getEvents = function (token , users, res) {
+graph.getEvents = function (token , users) {
   for (var i = 0; i < users.length; i++) {
 
     var deferred = Q.defer();
-    //958c3530-8ea4-43b9-bb0e-5f168f82aff3
     request.get('https://graph.microsoft.com/v1.0/users/'+users[i].id+'/calendar/events', {
       'auth': {
         'bearer': token
@@ -148,6 +115,7 @@ graph.getEvents = function (token , users, res) {
 
       if (err) {
         deferred.reject(err);
+
       } else  {
         var value = JSON.parse(response.body).value;
         var updatedValue =[]
@@ -159,21 +127,13 @@ graph.getEvents = function (token , users, res) {
 
           updatedValue.push(obj);
         });
-         res.json({events: updatedValue})
+        deferred.resolve(updatedValue);
       }
     });
-
     return deferred.promise;
   }
 };
 
-graph.pushNotification = function(){
-  var message = new gcm.Message();
-  message.addData('key1', 'msg1');
-  sender.send(message, { registrationTokens: regTokens }, function (err, response) {
-      if(err) console.error(err);
-      else    console.log(response);
-  });
-}
+
 
 module.exports = graph;

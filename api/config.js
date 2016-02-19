@@ -4,5 +4,7 @@ module.exports = {
   'tokenEndpoint': 'https://login.microsoftonline.com/df11fff4-79fd-4db7-9dac-447dc3cd5b13/oauth2/token',
   "test": "monodb://localhost/hack-productivity",
   "hostedDatabase": "mongodb://user1:user1@ds059145.mongolab.com:59145/yofitdb",
-  'gcm':'AIzaSyBAIqiMZOgr5hpgGzxGAtdkIs-Go8pqAZE'
+  'gcm':'AIzaSyBAIqiMZOgr5hpgGzxGAtdkIs-Go8pqAZE',
+  'regTokens' : '597929500512'
+
 };
