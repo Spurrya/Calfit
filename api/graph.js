@@ -102,7 +102,7 @@ graph.createEvent = function (token, users) {
   }
 };
 
-graph.getEvents = function (token , users) {
+graph.getEvents = function (token , users, res) {
   for (var i = 0; i < users.length; i++) {
 
     var deferred = Q.defer();

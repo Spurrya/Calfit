@@ -35,8 +35,8 @@ module.exports = function(router, mongoose, auth, graph){
         graph.getUsers(token)
           .then(function (users) {
             // Get calendar events for users
-            graph.getEvents(token, users).then(function(data){
-              
+            graph.getEvents(token, users, res).then(function(data){
+                res.json({message: data})
             })
             //if(canUserTakeBreak(listOfEvents))
             //  graph.pushNotification()
