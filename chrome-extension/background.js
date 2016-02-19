@@ -8,21 +8,12 @@ function messageReceived(message) {
   // A message is an object with a data property that
   // consists of key-value pairs.
 
-  // Concatenate all key-value pairs to form a display string.
-  var messageString = "";
-  for (var key in message.data) {
-    if (messageString != "")
-      messageString += ", "
-    messageString += key + ":" + message.data[key];
-  }
-  console.log("Message received: " + messageString);
-
   // Pop up a notification to show the GCM message.
   chrome.notifications.create(getNotificationId(), {
-    title: messageString,
+    title: message.data.name,
     iconUrl: 'assets/img/cat.jpg',
     type: 'basic',
-    message: messageString
+    message: message.data.activity
   }, function() {});
 }
 
