@@ -93,8 +93,8 @@ function canUserTakeBreak(listOfEvents){
   graph.pushNotification = function(response){
     var message = new gcm.Message();
     message.addData({
-        name: response.name,
-        activity: response.activity
+      activity: response.activity,
+      name: response.name,
     });
     sender.send(message, { registrationTokens: ['APA91bHvnmtPuV-0x7IWHZOd-GLbpc6GBQOfmwLfKVCDAYPZoKQzJr8PUBm3OelRuVx8Z6kgKpVFazEYVD8fm572xl640TGGamHa04773kMIShfBx-80HUGWJo2RmFS3bzsovKLa8Nhf_h_yBruYuvFy2lz5vy1v2g'] }, function (err, response) {
         if(err) console.error(err);
