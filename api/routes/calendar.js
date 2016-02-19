@@ -36,10 +36,15 @@ module.exports = function(router, mongoose, auth, graph){
           .then(function (users) {
             // Get calendar events for users
             graph.getEvents(token, users, res).then(function(data){
-                res.json({message: data})
+                if(canUserTakeBreak(data)==true){
+                  res.json({message: 'yes'})
+
+                }
+                else {
+                  res.json({message:'no'})
+                }
+
             })
-            //if(canUserTakeBreak(listOfEvents))
-            //  graph.pushNotification()
 
           }, function (error) {
             console.error('>>> Error getting calendar events for users: ' + error);
@@ -57,20 +62,21 @@ module.exports = function(router, mongoose, auth, graph){
 */
 
 function canUserTakeBreak(listOfEvents){
-  var currentDate = moment().utc().valueOf();
+  var currentDate = moment().utc();
 
     for(var i =0; i<listOfEvents.length;i++){
-        var start = listOfEvents[i].start.dateTime
-        var end  = listOfEvents[i].end.dateTime
+        var start = moment(listOfEvents[i].start.dateTime).utc()
+        var end  = moment(listOfEvents[i].end.dateTime).utc()
 
-        var differenceBetweenStartAndCurrent = moment.duration(start.diff(currentDate));
-        var minutes = duration.asMinutes();
+        var differenceBetweenStartAndCurrent = Math.abs(start.diff(currentDate, 'minutes'));
 
         //Only if the scheduled meeting is not
-        if (moment(currentDate).isBetween(start, end) && minutes >= 20){
+        if (moment(currentDate).isBetween(start, end) || differenceBetweenStartAndCurrent <= 20){
+          //Add additional logic here!!
           return false;
         }
     }
+    graph.pushNotification();
     return true;
   }
 
