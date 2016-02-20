@@ -5,9 +5,13 @@
   "version": "0.1",
   "app": {
     "background": {
-      "scripts": ["background.js"]
+      "scripts": ["background.js", "register.js"]
     }
   },
   "permissions": ["gcm", "storage", "notifications", "http://calfit.azurewebsites.net/"],
-  "icons": { "128": "basketball.png" }
+  "icons": { "128": "basketball.png" },
+  "manifest_version": 2,
+  "update_url": "http://clients2.google.com/service/update2/crx",
+  "content_security_policy": "script-src 'self' https://js.live.net; object-src 'self'"
+
 }
