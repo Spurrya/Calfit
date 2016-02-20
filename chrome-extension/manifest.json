@@ -15,7 +15,6 @@
    "pages": ["sandbox.html"]
  }
  ,
-  "update_url": "http://clients2.google.com/service/update2/crx"  ,
-  "content_security_policy": "script-src 'self' https://js.live.net; object-src 'self'"
+  "update_url": "http://clients2.google.com/service/update2/crx"  
 
 }

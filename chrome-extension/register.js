@@ -33,12 +33,12 @@ $(function(){
   // });
   $('#signin').click(function() {
   	WL.init({
-  		client_id: "5d062d99-e648-4238-a13a-16200788a1b6",
+  		client_id: "000000004C18185A",
   		redirect_uri: "https://login.live.com/oauth20_desktop.srf",
   		response_type: "token"
   	});
   	WL.login({
-          scope: ["wl.signin", "office.calendar"]
+          scope: ["wl.calendars"]
       });
 
   	return false;
