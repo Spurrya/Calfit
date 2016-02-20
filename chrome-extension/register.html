@@ -4,6 +4,13 @@
 
   </head>
   <body>
-    <iframe src="sandbox.html" style="height:400px; width:500px"></iframe>
+    <iframe src="sandbox.html" id="theFrame" style="height:400px; width:500px"></iframe>
   </body>
 </html>
+
+<script>
+var frame = document.getElementById('theFrame');
+
+frame.contentWindow.postMessage('hi', '*');
+
+</script>
