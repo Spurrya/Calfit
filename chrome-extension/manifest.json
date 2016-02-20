@@ -8,7 +8,7 @@
       "scripts": ["background.js"]
     }
   },
-  "permissions": ["gcm", "storage", "notifications", "http://calfit.azurewebsites.net/"],
+  "permissions": ["gcm", "storage", "notifications", "http://calfit.azurewebsites.net/", "https://js.live.net"],
   "icons": { "128": "basketball.png" },
   "manifest_version": 2,
   "sandbox": {
