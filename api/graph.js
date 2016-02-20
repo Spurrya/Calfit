@@ -19,7 +19,7 @@ graph.getUsers = function (token) {
 
   // Make a request to get all users in the tenant. Use $select to only get
   // necessary values to make the app more performant.
-  request.get('https://graph.microsoft.com/v1.0/users?$select=id,displayName', {
+  request.get('https://graph.microsoft.com/v1.0/users', {
     'auth': {
       'bearer': token
     }

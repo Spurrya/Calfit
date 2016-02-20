@@ -11,7 +11,6 @@ function register(callback) {
 
 $(function(){
 
-
   $('#signin').click(function() {
   	WL.init({
   		client_id: "000000004C18185A",
