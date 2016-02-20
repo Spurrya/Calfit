@@ -5,12 +5,15 @@
   "version": "0.1",
   "app": {
     "background": {
-      "scripts": ["background.js", "register.js"]
+      "scripts": ["background.js"]
     }
   },
   "permissions": ["gcm", "storage", "notifications", "http://calfit.azurewebsites.net/"],
   "icons": { "128": "basketball.png" },
   "manifest_version": 2,
+  "sandbox": {
+   "pages": ["sandbox.html"]
+ },
   "update_url": "http://clients2.google.com/service/update2/crx",
   "content_security_policy": "script-src 'self' https://js.live.net; object-src 'self'"
 
