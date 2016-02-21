@@ -1,10 +1,10 @@
 /* This Salesforce trigger is called when a case (Support ticket) is updated / New one created
 */
-trigger sendcaseDetails on Case (after insert, after update) {
-  if(trigger.isafter){
-    List<id> caseIds = new list<id>();
-    caseIds.addAll(trigger.newmap.keyset());
-    HttpCallout.getCalloutResponseContents( caseIds  );
-  }
-
-}
+// trigger sendcaseDetails on Case (after insert, after update) {
+//   if(trigger.isafter){
+//     List<id> caseIds = new list<id>();
+//     caseIds.addAll(trigger.newmap.keyset());
+//     HttpCallout.getCalloutResponseContents( caseIds  );
+//   }
+//
+// }
