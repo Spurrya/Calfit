@@ -1,0 +1,24 @@
+/* This class is called from Salesforce trigger and will make callout to YoFit server that
+a task (e.g. case/ Support ticket update) has been done.
+*/
+public class HttpCallout {
+
+  // Pass in the endpoint to be used using the string url
+  @future(callout=true)
+  public static void getCalloutResponseContents(List<id> caseIds) {
+
+    // Instantiate a new http object
+    Http h = new Http();
+    string url = 'http://calfit.azurewebsites.net/api/users?taskcompleted=supportcase&username=bhaanu&name=BhaanuMadhineni';
+     // Instantiate a new HTTP request, specify the method (GET) as well as the endpoint
+    HttpRequest req = new HttpRequest();
+    req.setEndpoint(url);
+    req.setMethod('GET');
+    //req.setMethod('POST');
+    //req.setBody('hello');
+    system.debug('XXXXXX');
+    // Send the request, and return a response
+    HttpResponse res = h.send(req);
+    
+  }
+}
