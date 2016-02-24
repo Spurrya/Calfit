@@ -1,18 +1,15 @@
+function register(callback) {
+  var senderId = '597929500512';
+  chrome.gcm.register([senderId], function (regId) {
+      if (chrome.runtime.lastError) {
+        return false;
+      }
+      chrome.storage.local.set({registered: true});
+      callback(regId);
+  });
+}
 
 $(function(){
-
-  function register(callback) {
-    var senderId = '597929500512';
-    chrome.gcm.register([senderId], function (regId) {
-        if (chrome.runtime.lastError) {
-          return false;
-        }
-    chrome.storage.local.set({registered: true})
-    callback(regId);
-
-    });
-  }
-
   $("#register-form").submit(function(e) {
     //Disable from further calls
     $('#submit').disabled = true;
@@ -21,7 +18,7 @@ $(function(){
       var email = $('#email').val()
       //Insert console.log or alert here to slow it down
       var chromeId = registrationId
-      debugger
+
       $.ajax({
            type: "POST",
            url: 'http://calfit.azurewebsites.net/api/users',
@@ -29,9 +26,8 @@ $(function(){
            data: {chromeId: chromeId, name: name, email:email},
            success: function(result)
            {
-             console.log(result)
+             $('#success').show()
            }
          });
     });
-  })
-})
+  });
