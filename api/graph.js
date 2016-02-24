@@ -130,4 +130,4 @@ graph.getEvents = function (token , users, res) {
   }
 };
 
-module.exports = auth;
+module.exports = graph;
