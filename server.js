@@ -4,8 +4,8 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var nodeInspector = require('node-inspector');
 var config = require('./api/config');
-var request = require('request');
-var Q = require('q');
+var graph = require('./api/graph');
+var auth = require('./api/auth');
 
 var app = express();
 
@@ -16,8 +16,7 @@ app.use(bodyParser.json());
 var port = process.env.PORT || 3000;
 var router = express.Router();
 
-var graph = require('./api/graph');
-var auth = require('./api/auth');
+
 require('./api/routes/index')(router, mongoose, auth);
 require('./api/routes/calendar')(router, mongoose, auth, graph);
 require('./api/routes/activities')(router, mongoose);
