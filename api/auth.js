@@ -3,8 +3,6 @@
  * See LICENSE in the project root for license information.
  */
 
-
-
 // The auth module object.
 var auth = {};
 
