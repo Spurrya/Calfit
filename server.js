@@ -17,9 +17,9 @@ var port = process.env.PORT || 3000;
 var router = express.Router();
 
 var graph = require('./api/graph');
-var auth = require('./api/auth')(request, Q,config);
+var auth = require('./api/auth');
 require('./api/routes/index')(router, mongoose, auth);
-require('./api/routes/calendar')(router, mongoose, auth, graph, request, Q);
+require('./api/routes/calendar')(router, mongoose, auth, graph, request, Q, config);
 require('./api/routes/activities')(router, mongoose);
 require('./api/routes/skype')(router, mongoose);
 
