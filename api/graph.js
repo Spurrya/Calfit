@@ -3,7 +3,7 @@
  * See LICENSE in the project root for license information.
  * Edited by: Spurrya Jaggi
  */
- var config = require('./api/config');
+ var config = require('./config');
  var request = require('request');
  var Q = require('q');
 // The graph module object.
