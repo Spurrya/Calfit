@@ -3,6 +3,9 @@
  * See LICENSE in the project root for license information.
  */
 
+ var config = require('./api/config');
+ var request = require('request');
+ var Q = require('q');
 // The auth module object.
 var auth = {};
 

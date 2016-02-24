@@ -1,4 +1,4 @@
-module.exports = function(router, mongoose, auth, graph, request, Q, config){
+module.exports = function(router, mongoose, auth, graph){
 
   var gcm = require('node-gcm');
   var config = require('../config')

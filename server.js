@@ -19,7 +19,7 @@ var router = express.Router();
 var graph = require('./api/graph');
 var auth = require('./api/auth');
 require('./api/routes/index')(router, mongoose, auth);
-require('./api/routes/calendar')(router, mongoose, auth, graph, request, Q, config);
+require('./api/routes/calendar')(router, mongoose, auth, graph);
 require('./api/routes/activities')(router, mongoose);
 require('./api/routes/skype')(router, mongoose);
 
