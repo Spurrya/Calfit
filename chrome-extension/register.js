@@ -7,9 +7,9 @@ $(function(){
         if (chrome.runtime.lastError) {
           return false;
         }
-    chrome.storage.local.set({registered: true}, function(regId) {
-          callback(regId);
-    });
+    chrome.storage.local.set({registered: true})
+    callback(regId);
+
     });
   }
 
