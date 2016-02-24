@@ -3,9 +3,8 @@
  * See LICENSE in the project root for license information.
  */
 
-var request = require('request');
-var Q = require('q');
-var config = require('./config');
+
+module.exports = function(request, Q,config){
 
 // The auth module object.
 var auth = {};
@@ -42,4 +41,5 @@ auth.getAccessToken = function () {
 };
 
 module.exports = auth;
- 
+
+}

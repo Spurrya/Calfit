@@ -4,13 +4,11 @@
  * Edited by: Spurrya Jaggi
  */
 
-var request = require('request');
-var Q = require('q');
+module.exports = function(){
 
 // The graph module object.
 var graph = {};
 //GCM Api key
-
 
 // @name getUsers
 // @desc Makes a request to the Microsoft Graph for all users in the tenant.
@@ -38,8 +36,6 @@ graph.getUsers = function (token) {
 
   return deferred.promise;
 };
-
-
 
 // @name createEvent
 // @desc Creates an event on each user's calendar.
@@ -134,6 +130,6 @@ graph.getEvents = function (token , users, res) {
   }
 };
 
-
-
 module.exports = graph;
+
+}

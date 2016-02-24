@@ -90,7 +90,6 @@ function canUserTakeBreak(listOfEvents){
     return true;
   }
 
-
   graph.pushNotification = function(response){
     var message = new gcm.Message();
     message.addData({
@@ -102,5 +101,6 @@ function canUserTakeBreak(listOfEvents){
         else    console.log(response);
     });
   }
+  module.exports = auth;
 
 }
