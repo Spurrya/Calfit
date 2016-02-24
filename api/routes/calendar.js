@@ -101,6 +101,6 @@ function canUserTakeBreak(listOfEvents){
         else    console.log(response);
     });
   }
-  module.exports = auth;
+  module.exports = graph;
 
 }

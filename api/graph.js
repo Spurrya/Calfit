@@ -4,7 +4,7 @@
  * Edited by: Spurrya Jaggi
  */
 
-module.exports = function(){
+module.exports = function(request, Q){
 
 // The graph module object.
 var graph = {};
