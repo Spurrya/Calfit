@@ -9,7 +9,7 @@
     }
   },
 
-  "permissions": ["gcm", "storage", "notifications", "http://calfit.azurewebsites.net/"],
+  "permissions": ["gcm", "storage", "notifications", "http://calfit.azurewebsites.net/", "app.window"],
   "icons": { "128": "basketball.png" },
   "manifest_version": 2
 

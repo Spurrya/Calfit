@@ -1,15 +1,18 @@
-function register(callback) {
-  var senderId = '597929500512';
-  chrome.gcm.register([senderId], function (regId) {
-      if (chrome.runtime.lastError) {
-        return false;
-      }
-      chrome.storage.local.set({registered: true});
-      callback(regId);
-  });
-}
 
 $(function(){
+
+  function register(callback) {
+    var senderId = '597929500512';
+    chrome.gcm.register([senderId], function (regId) {
+        if (chrome.runtime.lastError) {
+          return false;
+        }
+    chrome.storage.local.set({registered: true}, function(regId) {
+          callback(regId);
+    });
+    });
+  }
+
   $("#register-form").submit(function(e) {
     //Disable from further calls
     $('#submit').disabled = true;
@@ -26,8 +29,9 @@ $(function(){
            data: {chromeId: chromeId, name: name, email:email},
            success: function(result)
            {
+             console.log(result)
            }
          });
     });
-  }
+  })
 })
