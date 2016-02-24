@@ -39,3 +39,5 @@ auth.getAccessToken = function () {
 
   return deferred.promise;
 };
+
+module.exports = auth;

@@ -129,3 +129,5 @@ graph.getEvents = function (token , users, res) {
     return deferred.promise;
   }
 };
+
+module.exports = auth;
