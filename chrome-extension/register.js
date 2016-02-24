@@ -10,7 +10,6 @@ function register(callback) {
 }
 
 $(function(){
-
   $("#register-form").submit(function(e) {
     //Disable from further calls
     $('#submit').disabled = true;
@@ -19,7 +18,7 @@ $(function(){
       var email = $('#email').val()
       //Insert console.log or alert here to slow it down
       var chromeId = registrationId
-
+      debugger
       $.ajax({
            type: "POST",
            url: 'http://calfit.azurewebsites.net/api/users',
@@ -30,3 +29,5 @@ $(function(){
            }
          });
     });
+  }
+})
