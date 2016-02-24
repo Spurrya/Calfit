@@ -22,7 +22,8 @@ router.route('/users')
   auth.getAccessToken().then(function (token) {
     console.log(token)
     var user = new User({
-      officeId: token,
+      //officeId: token,
+      officeId: req.body.officeId,
       name : req.body.name,
       email :req.body.email,
       chromeId : req.body.chromeId
