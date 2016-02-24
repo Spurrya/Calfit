@@ -16,7 +16,6 @@ $(function(){
     register(function (registrationId) {
       var name = $('#name').val()
       var email = $('#email').val()
-      //Insert console.log or alert here to slow it down
       var chromeId = registrationId
 
       $.ajax({
