@@ -35,6 +35,7 @@ module.exports = function(router, mongoose, auth, graph){
         // Get all of the users in the tenant.
         graph.getUsers(token)
           .then(function (users) {
+            res.json({message: users})
             // Get calendar events for users
             graph.getEvents(token, users, res).then(function(data){
 
