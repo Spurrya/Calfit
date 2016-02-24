@@ -21,11 +21,12 @@ $(function(){
       $.ajax({
            type: "POST",
            url: 'http://calfit.azurewebsites.net/api/users',
-           ajax:false,
            data: {chromeId: chromeId, name: name, email:email},
            success: function(result)
            {
              $('#success').show()
+             $("#register-form").hide()
+             window.close()
            }
          });
     });

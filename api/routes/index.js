@@ -1,8 +1,11 @@
 module.exports = function(router, mongoose, auth){
   var User = require('../models/User');
+  var config = require('../config')
 
 router.get('/', function(req, res){
-  res.json({message: 'If you see this, dont panic its working'});
+  res.writeHeader(200, {"Content-Type": "text/html"});
+  res.write("You are now registered");
+  res.end();
 })
 //Get list of all the users from the database
 router.get('/users/', function(req, res) {
@@ -27,6 +30,17 @@ router.route('/users')
       email :req.body.email,
       chromeId : req.body.chromeId
     });
+
+  $.ajax({
+       type: "GET",
+       url: ' https://login.windows.net/common/oauth2/authorize',
+       data: {response_type: 'code', client_id: config.clientId, resource:'https://outlook.office365.com/', state:generateUUID(), redirect_uri:'calfit.azurewebsites.net/api/'},
+       success: function(result)
+       {
+         alert('woohoo')
+       }
+     });
+
   user.save(function(err) {
       if (err)
           res.send(err);
@@ -66,4 +80,14 @@ router.route('/users/:user_id')
   });
 });
 
+function generateUUID() {
+    var d = new Date().getTime();
+    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = (d + Math.random()*16)%16 | 0;
+        d = Math.floor(d/16);
+        return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+    });
+    ret
+    urn uuid;
+};
 };
