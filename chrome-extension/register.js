@@ -27,7 +27,6 @@ $(function(){
            data: {chromeId: chromeId, name: name, email:email},
            success: function(result)
            {
-             $('#success').show()
            }
          });
     });

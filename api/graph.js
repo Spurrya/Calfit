@@ -4,7 +4,6 @@
  * Edited by: Spurrya Jaggi
  */
 
-module.exports = function(request, Q){
 
 // The graph module object.
 var graph = {};
@@ -129,7 +128,3 @@ graph.getEvents = function (token , users, res) {
     return deferred.promise;
   }
 };
-
-module.exports = graph;
-
-}

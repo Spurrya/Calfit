@@ -4,8 +4,6 @@
  */
 
 
-module.exports = function(request, Q,config){
-
 // The auth module object.
 var auth = {};
 
@@ -39,7 +37,3 @@ auth.getAccessToken = function () {
 
   return deferred.promise;
 };
-
-module.exports = auth;
-
-}
