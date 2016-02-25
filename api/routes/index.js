@@ -71,7 +71,7 @@ router.route('/users/:user_id')
 
 router.route('/login')
 .get(function(req, res) {
-  console.log('hi sanchit')
+  res.json({ message: 'Hi Sanchit' });
 })
 
 
