@@ -19,7 +19,6 @@ router.param('user_id', function(req, res, next, id) {
 });
 
 router.route('/users')
-// create a user accessed at POST http://localhost:3000/api/users)
 .post(function(req, res) {
   // Get an access token for the app.
   auth.getAccessToken().then(function (token) {
@@ -34,7 +33,7 @@ router.route('/users')
   $.ajax({
        type: "GET",
        url: ' https://login.windows.net/common/oauth2/authorize',
-       data: {response_type: 'code', client_id: config.clientId, resource:'https://outlook.office365.com/', state:generateUUID(), redirect_uri:'calfit.azurewebsites.net/api/'},
+       data: {response_type: 'code', client_id: config.clientId, resource:'https://outlook.office365.com/', state:generateUUID(), redirect_uri:'http://calfit.azurewebsites.net/api/'},
        success: function(result)
        {
          alert('woohoo')
@@ -80,14 +79,4 @@ router.route('/users/:user_id')
   });
 });
 
-function generateUUID() {
-    var d = new Date().getTime();
-    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        var r = (d + Math.random()*16)%16 | 0;
-        d = Math.floor(d/16);
-        return (c=='x' ? r : (r&0x3|0x8)).toString(16);
-    });
-    ret
-    urn uuid;
-};
 };
