@@ -71,7 +71,7 @@ router.route('/users/:user_id')
 
 router.route('/login')
 .get(function(req, res) {
-  alert('wgoo')
+  console.log('hi sanchit')
 })
 
 
