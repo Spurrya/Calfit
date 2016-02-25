@@ -4,6 +4,7 @@ module.exports = function(router, mongoose, auth, graph){
   var config = require('../config')
   var moment = require('moment');
   var Activity = require('../models/activity');
+  var User = require('../models/User')
 
 
   var sender = new gcm.Sender(config.gcm);
@@ -47,8 +48,9 @@ module.exports = function(router, mongoose, auth, graph){
                 var activities = activity;
 
                 if(canUserTakeBreak(data)==true){
-                  res.json({message: 'yes'})
-                  graph.pushNotification(activities[Math.floor(Math.random() * activities.length)])
+
+
+                  graph.pushNotification(activities[Math.floor(Math.random() * activities.length)], chromeId)
                 }
                 else {
                   res.json({message:'no'})
@@ -90,13 +92,13 @@ function canUserTakeBreak(listOfEvents){
     return true;
   }
 
-  graph.pushNotification = function(response){
+  graph.pushNotification = function(response, chromeId){
     var message = new gcm.Message();
     message.addData({
       activity: response.activity,
       name: response.name,
     });
-    sender.send(message, { registrationTokens: ['APA91bHvnmtPuV-0x7IWHZOd-GLbpc6GBQOfmwLfKVCDAYPZoKQzJr8PUBm3OelRuVx8Z6kgKpVFazEYVD8fm572xl640TGGamHa04773kMIShfBx-80HUGWJo2RmFS3bzsovKLa8Nhf_h_yBruYuvFy2lz5vy1v2g'] }, function (err, response) {
+    sender.send(message, { registrationTokens: [chromeId] }, function (err, response) {
         if(err) console.error(err);
         else    console.log(response);
     });

@@ -20,34 +20,33 @@ $(function() {
       var email = $('#email').val();
       var chromeId = registrationId;
 
-      // $.ajax({
-      //      type: "POST",
-      //      url: 'http://calfit.azurewebsites.net/api/users',
-      //      data: {chromeId: chromeId, name: name, email:email},
-      //      success: function(result)
-      //      {
-      //        $('#success').show()
-      //        $("#register-form").hide()
-      //        window.close()
-      //      }
-      //    });
-      consolo.log('requesting');
       $.ajax({
-        type: "GET",
-        dataType: 'jsonp',
-        url: 'https://login.windows.net/common/oauth2/authorize',
-        data: {
-          response_type: 'code',
-          client_id: '3954fa24-2c18-4994-8776-5190b784edf5',
-          resource: 'https://outlook.office365.com/',
-          state: generateUUID(),
-          redirect_uri: 'http://calfit.azurewebsites.net/api/login'
-        },
-        success: function(result) {
-          consolo.log('redirected');
-          window.close();
-        }
-      });
+           type: "POST",
+           url: 'http://calfit.azurewebsites.net/api/users',
+           data: {chromeId: chromeId, name: name, email:email},
+           success: function(result)
+           {
+             $('#success').show()
+             $("#register-form").hide()
+             window.close()
+           }
+         });
+      console.log('requesting');
+      // $.ajax({
+      //   type: "GET",
+      //   dataType: 'jsonp',
+      //   url: 'https://login.windows.net/common/oauth2/authorize',
+      //   data: {
+      //     response_type: 'code',
+      //     client_id: '3954fa24-2c18-4994-8776-5190b784edf5',
+      //     resource: 'https://outlook.office365.com/',
+      //     state: generateUUID(),
+      //     redirect_uri: 'http://calfit.azurewebsites.net/api/login'
+      //   },
+      //   success: function(result) {
+      //     consolo.log('redirected');
+      //   }
+      // });
     });
   });
 

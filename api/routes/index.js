@@ -22,9 +22,8 @@ router.route('/users')
 .post(function(req, res) {
   // Get an access token for the app.
   auth.getAccessToken().then(function (token) {
-    console.log(token)
     var user = new User({
-      officeId: token,
+      officeId: "123",
       name : req.body.name,
       email :req.body.email,
       chromeId : req.body.chromeId
@@ -38,6 +37,17 @@ router.route('/users')
   });
 
 });
+
+router.route('/users/:email')
+  .get(function(req,res,next){
+    var user = User.find({email : req.params.email}, function(err,user){
+      if (err)
+          res.send(err);
+      res.json({user: user});
+    })
+})
+
+
   // Getting, setting and deleting users
 router.route('/users/:user_id')
 .all(function(req, res, next) {
