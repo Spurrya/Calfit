@@ -12,5 +12,6 @@
     "pages": ["sandboxed.html"]
   },
   "permissions": ["gcm", "storage", "notifications", "http://calfit.azurewebsites.net/"],
-  "icons": { "128": "basketball.png" }
+  "icons": { "128": "basketball.png" },
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
 }
