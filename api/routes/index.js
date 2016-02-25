@@ -47,7 +47,6 @@ router.route('/users/:email')
     })
 })
 
-
   // Getting, setting and deleting users
 router.route('/users/:user_id')
 .all(function(req, res, next) {

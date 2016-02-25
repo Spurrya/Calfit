@@ -36,7 +36,7 @@ module.exports = function(router, mongoose, auth, graph){
         // Get all of the users in the tenant.
         graph.getUsers(token)
           .then(function (users) {
-            res.json({message: users})
+            // res.json({message: users})
             // Get calendar events for users
             graph.getEvents(token, users, res).then(function(data){
 
@@ -49,8 +49,10 @@ module.exports = function(router, mongoose, auth, graph){
 
                 if(canUserTakeBreak(data)==true){
 
-
-                  graph.pushNotification(activities[Math.floor(Math.random() * activities.length)], chromeId)
+                  var users = findUsers()
+                  users.forEach(function(user){
+                    graph.pushNotification(activities[Math.floor(Math.random() * activities.length)], user.chromeId)
+                  })
                 }
                 else {
                   res.json({message:'no'})
@@ -67,6 +69,13 @@ module.exports = function(router, mongoose, auth, graph){
       });
   });
 
+var findUsers = function() {
+  var user = User.find({email : 'bhaanu@yofit1.onmicrosoft.com'}, function(err,u){
+    if (err)
+        console.log(err);
+    return u
+  })
+}
 
 /*
   Returns a boolean value whether the user CAN take a break
