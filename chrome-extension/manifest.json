@@ -8,6 +8,9 @@
       "scripts": ["background.js"]
     }
   },
+  "sandbox": {
+    "pages": ["sandboxed.html"]
+  },
   "permissions": ["gcm", "storage", "notifications", "http://calfit.azurewebsites.net/"],
   "icons": { "128": "basketball.png" }
 }

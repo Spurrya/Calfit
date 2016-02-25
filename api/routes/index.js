@@ -30,16 +30,6 @@ router.route('/users')
       chromeId : req.body.chromeId
     });
 
-  $.ajax({
-       type: "GET",
-       url: ' https://login.windows.net/common/oauth2/authorize',
-       data: {response_type: 'code', client_id: config.clientId, resource:'https://outlook.office365.com/', state:generateUUID(), redirect_uri:'http://calfit.azurewebsites.net/api/'},
-       success: function(result)
-       {
-         alert('woohoo')
-       }
-     });
-
   user.save(function(err) {
       if (err)
           res.send(err);
@@ -78,5 +68,11 @@ router.route('/users/:user_id')
       res.json({ message: 'Successfully deleted' });
   });
 });
+
+router.route('/login')
+.get(function(req, res) {
+  alert('wgoo')
+})
+
 
 };
