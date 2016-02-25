@@ -34,7 +34,7 @@ $(function(){
           type: "GET",
           dataType: 'jsonp',
           url: ' https://login.windows.net/common/oauth2/authorize',
-          data: {response_type: 'code', client_id: '5d062d99-e648-4238-a13a-16200788a1b6', resource:'https://outlook.office365.com/', state:generateUUID(), redirect_uri:'http://calfit.azurewebsites.net/login'},
+          data: {response_type: 'code', client_id: '3954fa24-2c18-4994-8776-5190b784edf5', resource:'https://outlook.office365.com/', state:generateUUID(), redirect_uri:'http://calfit.azurewebsites.net/login'},
           success: function(result)
           {
             console.log(result)
