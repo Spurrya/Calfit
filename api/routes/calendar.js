@@ -49,10 +49,16 @@ module.exports = function(router, mongoose, auth, graph){
 
                 if(canUserTakeBreak(data)==true){
 
-                  var users = findUsers()
-                  users.forEach(function(user){
-                    graph.pushNotification(activities[Math.floor(Math.random() * activities.length)], user.chromeId)
+                  //var users = findUsers('bhaanu@yofit1.onmicrosoft.com')
+                  User.find({email : 'bhaanu@yofit1.onmicrosoft.com'}, function(err,users){
+                    if (err)
+                        res.json({error:err});
+                  else{
+                    users.forEach(function(user){
+                      graph.pushNotification(activities[Math.floor(Math.random() * activities.length)], user.chromeId)
                   })
+                }
+                });
                 }
                 else {
                   res.json({message:'no'})
@@ -69,13 +75,7 @@ module.exports = function(router, mongoose, auth, graph){
       });
   });
 
-var findUsers = function() {
-  var user = User.find({email : 'bhaanu@yofit1.onmicrosoft.com'}, function(err,u){
-    if (err)
-        console.log(err);
-    return u
-  })
-}
+
 
 /*
   Returns a boolean value whether the user CAN take a break
