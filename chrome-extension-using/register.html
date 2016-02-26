@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>CalFit</title>
+<link rel="stylesheet" href="assets/bootstrap.min.css" >
+<link rel="stylesheet" href="assets/login.css">
+<script src="assets/jquery.min.js"></script>
+<script src="register.js"></script>
+</head>
+<body>
+<div class="container">
+	<div class="row">
+		<h2 align="center">Register</h2>
+	</div>
+	<form id="register-form" action="" method="post" role="form">
+		<div class="form-group">
+			<input type="text" name="name" id="name" tabindex="1" class="form-control" placeholder="Name" value="">
+		</div>
+		<div class="form-group">
+			<input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email Address" value="">
+		</div>
+		<div class="form-group">
+			<div class="row">
+				<div class="col-sm-6 col-sm-offset-3">
+					<input type="submit" name="register-submit" id="submit" tabindex="4" class="form-control btn btn-register" value="Register Now">
+				</div>
+			</div>
+		</div>
+	</form>
+	<div class="alert alert-success" id="success" style="display:none;">
+  	<strong>Success!</strong> 
+	</div>
+</div>
+</body>
+</html>

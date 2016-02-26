@@ -48,8 +48,8 @@ module.exports = function(router, mongoose, auth, graph){
                 var activities = activity;
 
                 if(canUserTakeBreak(data)==true){
+                  res.json({message:'yes'})
 
-                  //var users = findUsers('bhaanu@yofit1.onmicrosoft.com')
                   User.find({email : 'bhaanu@yofit1.onmicrosoft.com'}, function(err,users){
                     if (err)
                         res.json({error:err});

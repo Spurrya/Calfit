@@ -1,0 +1,13 @@
+{
+  "name": "Calfit",
+  "description": "Keep yourself fit and productive by taking breaks based off your calendar schedule.",
+  "manifest_version": 2,
+  "version": "0.1",
+  "app": {
+    "background": {
+      "scripts": ["background.js"]
+    }
+  },
+  "permissions": ["gcm", "storage", "notifications", "http://calfit.azurewebsites.net/"],
+  "icons": { "128": "basketball.png" }
+}
