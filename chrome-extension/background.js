@@ -13,7 +13,11 @@ function messageReceived(message) {
     title: message.data.name,
     iconUrl: 'assets/img/cat.jpg',
     type: 'basic',
-    message: message.data.activity
+    message: message.data.activity,
+    buttons : [
+    { title: "Accept" },
+    { title: "Reject" }
+    ]
   }, function() {});
 }
 
@@ -37,9 +41,21 @@ function firstTimeRegistration() {
   });
 }
 
+
+function notificationBtnClick(notification, ibtn) {
+  if (ibtn=1) {
+    //find other users
+    console.log(notification)
+
+  }else {
+    //snooze
+  }
+}
+
 // Set up a listener for GCM message event.
 chrome.gcm.onMessage.addListener(messageReceived);
 
 // Set up listeners to trigger the first time registration.
 chrome.runtime.onInstalled.addListener(firstTimeRegistration);
 chrome.runtime.onStartup.addListener(firstTimeRegistration);
+chrome.notifications.onButtonClicked.addListener(notificationBtnClicked);

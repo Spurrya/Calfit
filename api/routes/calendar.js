@@ -54,8 +54,14 @@ module.exports = function(router, mongoose, auth, graph){
                     if (err)
                         res.json({error:err});
                   else{
-                    users.forEach(function(user){
-                      graph.pushNotification(activities[Math.floor(Math.random() * activities.length)], user.chromeId)
+                    users.forEach(function(user, index){
+                        var message = {}
+                        activity =  activities[Math.floor(Math.random() * activities.length)]
+                        message.activity = activity.activity;
+                        message.name = activity.name
+                        var str = ""
+                        message.prompt = str.concat("Hi, ", user.name , " ! " , activity.activity)
+                        graph.pushNotification(message, user.chromeId)
                   })
                 }
                 });
@@ -96,7 +102,8 @@ function canUserTakeBreak(listOfEvents){
         if (moment(currentDate).isBetween(start, end) || differenceBetweenStartAndCurrent <= 20){
           //Add additional logic here!!
           console.log(differenceBetweenStartAndCurrent);
-          return false;
+          //FOR NOW
+          return true;
         }
     }
     return true;
@@ -107,10 +114,10 @@ function canUserTakeBreak(listOfEvents){
     message.addData({
       activity: response.activity,
       name: response.name,
+      prompt: response.prompt
     });
     sender.send(message, { registrationTokens: [chromeId] }, function (err, response) {
         if(err) console.error(err);
-        else    console.log(response);
     });
   }
   module.exports = graph;
