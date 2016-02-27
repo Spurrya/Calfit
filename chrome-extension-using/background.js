@@ -41,10 +41,33 @@ function firstTimeRegistration() {
   });
 }
 
+// Event handlers for the various notification events
+function notificationClosed(notification , byuser) {
+  chrome.notifications.clear(notification, function() {
+
+        console.log("Invite responded .");
+      });
+}
+
+function notificationClicked(notification ) {
+
+   chrome.notifications.clear(notification, function(wasCleared) {
+    setStatus("Notification Invite responded");
+        console.log("Invite responded .");
+      });
+}
+
 function notificationBtnClicked(notification, ibtn) {
   console.log(notification)
   console.log(ibtn)
-  if (ibtn=1) {
+
+  chrome.notifications.clear(notification, function(wasCleared) {
+    // ibtn =0 (accept)
+    // ibtn =1  (reject)
+    });
+  if (ibtn=0) {
+    setStatus("1");
+
     chrome.storage.local.get("name", function(name){
       chrome.storage.local.get("email",function(email){
           //call other users
