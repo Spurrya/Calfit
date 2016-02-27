@@ -23,7 +23,6 @@ router.route('/users')
   // Get an access token for the app.
   auth.getAccessToken().then(function (token) {
     var user = new User({
-      officeId: "123",
       name : req.body.name,
       email :req.body.email,
       chromeId : req.body.chromeId

@@ -30,7 +30,7 @@ module.exports = function(router, mongoose, auth, graph){
   });
 
 //This route provides all the timings of the upcoming events in the calendar.
-  router.get('/calendar', function(req, res){
+  router.get('/calendar/:emailId', function(req, res){
       // Get an access token for the app.
       auth.getAccessToken().then(function (token) {
         // Get all of the users in the tenant.
@@ -49,8 +49,8 @@ module.exports = function(router, mongoose, auth, graph){
 
                 if(canUserTakeBreak(data)==true){
                   res.json({message:'yes'})
-
-                  User.find({email : 'bhaanu@yofit1.onmicrosoft.com'}, function(err,users){
+                  //bhaanu@yofit1.onmicrosoft.com
+                  User.find({email : emailId}, function(err,users){
                     if (err)
                         res.json({error:err});
                   else{
