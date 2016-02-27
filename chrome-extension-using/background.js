@@ -44,8 +44,8 @@ function firstTimeRegistration() {
 function notificationBtnClicked(notification, ibtn) {
   if (ibtn=1) {
     //find other users
-    console.log(notification)
 
+    
   }else {
     //snooze
   }

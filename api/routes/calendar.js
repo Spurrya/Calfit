@@ -34,9 +34,8 @@ module.exports = function(router, mongoose, auth, graph){
       // Get an access token for the app.
       auth.getAccessToken().then(function (token) {
         // Get all of the users in the tenant.
-        graph.getUsers(token)
+        graph.getUserByEmail(token, req.params.emailId)
           .then(function (users) {
-            // res.json({message: users})
             // Get calendar events for users
             graph.getEvents(token, users, res).then(function(data){
 
@@ -81,7 +80,49 @@ module.exports = function(router, mongoose, auth, graph){
       });
   });
 
+  router.get('accepted/:emailId', function(req, res){
+    auth.getAccessToken().then(function (token) {
+      // Get all of the users in the tenant.
+      graph.getUsers(token)
+        .then(function (users) {
+          // Get calendar events for users
+          graph.getEvents(token, users, res).then(function(data){
+            Activity.find(function(err, activity) {
+              var activities = activity;
 
+              if(canUserTakeBreak(data)==true){
+                res.json({message:data})
+                //bhaanu@yofit1.onmicrosoft.com
+                User.find({email : req.params.emailId}, function(err,users){
+                  if (err)
+                      res.json({error:err});
+                else{
+                  users.forEach(function(user, index){
+                      var message = {}
+                      activity =  activities[Math.floor(Math.random() * activities.length)]
+                      message.activity = activity.activity;
+                      message.name = activity.name
+                      var str = ""
+                      message.prompt = str.concat("Hi, ", user.name , " ! " , activity.activity)
+                      graph.pushNotification(message, user.chromeId)
+                })
+              }
+              });
+              }
+              else {
+                res.json({message:data})
+              }
+            });
+
+          })
+
+        }, function (error) {
+          console.error('>>> Error getting calendar events for users: ' + error);
+        });
+    }, function (error) {
+      console.error('>>> Error getting access token: ' + error);
+    });
+  })
 
 /*
   Returns a boolean value whether the user CAN take a break

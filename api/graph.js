@@ -17,7 +17,32 @@ graph.getUsers = function (token) {
 
   // Make a request to get all users in the tenant. Use $select to only get
   // necessary values to make the app more performant.
-  request.get('https://graph.microsoft.com/v1.0/users', {
+  request.get("https://graph.microsoft.com/v1.0/users?$filter=mail ne '"+email+"'", {
+    'auth': {
+      'bearer': token
+    }
+  }, function (err, response, body) {
+    var parsedBody = JSON.parse(body);
+
+    if (err) {
+      deferred.reject(err);
+    } else if (parsedBody.error) {
+      deferred.reject(parsedBody.error.message);
+    } else {
+      // The value of the body will be an array of all users.
+      deferred.resolve(parsedBody.value);
+    }
+  });
+
+  return deferred.promise;
+};
+
+// @name getUserByEmail
+// @desc Makes a request to the Microsoft Graph for  users in the tenant.
+graph.getUserByEmail = function (token, email) {
+  var deferred = Q.defer();
+
+  request.get("https://graph.microsoft.com/v1.0/users?$filter=mail eq '"+email+"'", {
     'auth': {
       'bearer': token
     }
@@ -100,6 +125,38 @@ graph.createEvent = function (token, users) {
 
 graph.getEvents = function (token , users, res) {
   for (var i = 0; i < users.length; i++) {
+    var deferred = Q.defer();
+    request.get('https://graph.microsoft.com/v1.0/users/'+users[i].id+'/calendar/events', {
+      'auth': {
+        'bearer': token
+      }
+    }, function (err, response, body) {
+      var parsedBody = JSON.parse(body);
+
+      if (err) {
+        deferred.reject(err);
+
+      } else  {
+        var value = JSON.parse(response.body).value;
+        var updatedValue =[]
+        value.forEach(function(calItem){
+          var obj ={
+            start : calItem.start,
+            end : calItem.end,
+            email:calItem.mail
+          };
+
+          updatedValue.push(obj);
+        });
+        deferred.resolve(updatedValue);
+      }
+    });
+    return deferred.promise;
+  }
+};
+
+graph.getSingleUserEvents = function (token , users, res, email) {
+  for (var i = 0; i < users.length; i++) {
 
     var deferred = Q.defer();
     request.get('https://graph.microsoft.com/v1.0/users/'+users[i].id+'/calendar/events', {
@@ -129,5 +186,6 @@ graph.getEvents = function (token , users, res) {
     return deferred.promise;
   }
 };
+
 
 module.exports = graph;
