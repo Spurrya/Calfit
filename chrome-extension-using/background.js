@@ -42,10 +42,23 @@ function firstTimeRegistration() {
 }
 
 function notificationBtnClicked(notification, ibtn) {
+  console.log(notification)
+  console.log(ibtn)
   if (ibtn=1) {
-    //find other users
+    chrome.storage.local.get("name", function(name){
+      chrome.storage.local.get("email",function(email){
+          //call other users
+          $.ajax({
+               type: "POST",
+               url: 'http://calfit.azurewebsites.net/api/accepted/'+email+'/'+ name,
+               ajax:true,
+               success: function(result)
+               {
+               }
+             });
+      });
+    })
 
-    
   }else {
     //snooze
   }

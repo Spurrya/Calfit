@@ -15,8 +15,6 @@ var graph = {};
 graph.getUsers = function (token) {
   var deferred = Q.defer();
 
-  // Make a request to get all users in the tenant. Use $select to only get
-  // necessary values to make the app more performant.
   request.get("https://graph.microsoft.com/v1.0/users?$filter=mail ne '"+email+"'", {
     'auth': {
       'bearer': token

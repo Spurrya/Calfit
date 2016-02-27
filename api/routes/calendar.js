@@ -36,6 +36,8 @@ module.exports = function(router, mongoose, auth, graph){
         // Get all of the users in the tenant.
         graph.getUserByEmail(token, req.params.emailId)
           .then(function (users) {
+
+
             // Get calendar events for users
             graph.getEvents(token, users, res).then(function(data){
 
@@ -80,7 +82,7 @@ module.exports = function(router, mongoose, auth, graph){
       });
   });
 
-  router.get('accepted/:emailId', function(req, res){
+  router.get('accepted/:email/:name', function(req, res){
     auth.getAccessToken().then(function (token) {
       // Get all of the users in the tenant.
       graph.getUsers(token)
@@ -93,7 +95,7 @@ module.exports = function(router, mongoose, auth, graph){
               if(canUserTakeBreak(data)==true){
                 res.json({message:data})
                 //bhaanu@yofit1.onmicrosoft.com
-                User.find({email : req.params.emailId}, function(err,users){
+                User.find({email : req.params.email}, function(err,users){
                   if (err)
                       res.json({error:err});
                 else{
@@ -103,7 +105,7 @@ module.exports = function(router, mongoose, auth, graph){
                       message.activity = activity.activity;
                       message.name = activity.name
                       var str = ""
-                      message.prompt = str.concat("Hi, ", user.name , " ! " , activity.activity)
+                      message.prompt = str.concat("Hi, ", user.name , " ! Join " , req.param.name ," for a work out session!")
                       graph.pushNotification(message, user.chromeId)
                 })
               }

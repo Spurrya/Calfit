@@ -16,17 +16,23 @@ $(function(){
     register(function (registrationId) {
       var name = $('#name').val()
       var email = $('#email').val()
+
+      chrome.storage.local.set({name:name})
+      chrome.storage.local.set({email:email})
+
+
       //Insert console.log or alert here to slow it down
       var chromeId = registrationId
 
       $.ajax({
            type: "POST",
            url: 'http://calfit.azurewebsites.net/api/users',
-           ajax:false,
+           ajax:true,
            data: {chromeId: chromeId, name: name, email:email},
            success: function(result)
            {
              $('#success').show()
+             window.close() //close the registeration window
            }
          });
     });
