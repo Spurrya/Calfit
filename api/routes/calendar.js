@@ -48,9 +48,9 @@ module.exports = function(router, mongoose, auth, graph){
                 var activities = activity;
 
                 if(canUserTakeBreak(data)==true){
-                  res.json({message:'yes'})
+                  res.json({message:data})
                   //bhaanu@yofit1.onmicrosoft.com
-                  User.find({email : emailId}, function(err,users){
+                  User.find({email : req.params.emailId}, function(err,users){
                     if (err)
                         res.json({error:err});
                   else{
@@ -61,7 +61,7 @@ module.exports = function(router, mongoose, auth, graph){
                 });
                 }
                 else {
-                  res.json({message:'no'})
+                  res.json({message:data})
                 }
               });
 
@@ -95,6 +95,7 @@ function canUserTakeBreak(listOfEvents){
         //Only if the scheduled meeting is not
         if (moment(currentDate).isBetween(start, end) || differenceBetweenStartAndCurrent <= 20){
           //Add additional logic here!!
+          console.log(differenceBetweenStartAndCurrent);
           return false;
         }
     }
