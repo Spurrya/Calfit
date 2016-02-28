@@ -14,8 +14,8 @@ var graph = {};
 // @desc Makes a request to the Microsoft Graph for all users in the tenant.
 graph.getUsers = function (token) {
   var deferred = Q.defer();
-
-  request.get("https://graph.microsoft.com/v1.0/users?$filter=mail ne '"+email+"'", {
+  //MUST CHANGE BACK TO NE (MEANS NOT EQUAL TOO)
+  request.get("https://graph.microsoft.com/v1.0/users?$filter=mail eq '"+email+"'", {
     'auth': {
       'bearer': token
     }
