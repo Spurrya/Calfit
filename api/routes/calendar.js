@@ -116,7 +116,7 @@ module.exports = function(router, mongoose, auth, graph){
                         message.imgUrl = activity.imgUrl
                         message.firstUser = 1;
                         var str = ""
-                        message.prompt = str.concat("Hi, ", user.name , " ! " , "Join", req.params.name, "for a fun break activity!")
+                        message.prompt = str.concat("Hi, ", user.name , " ! " , "Join", decodeURI(req.params.name), "for a fun break activity!")
                         console.log(message)
                         graph.pushNotification(message, user.chromeId)
                   })

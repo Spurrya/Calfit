@@ -71,7 +71,7 @@ function notificationBtnClick(notification, ibtn) {
           var email = result.email
 
           $.ajax({
-               url: 'http://calfit.azurewebsites.net/api/accepted/' + email + '/'+ name,
+               url: encodeURI('http://calfit.azurewebsites.net/api/accepted/' + email + '/'+ name),
                ajax:true,
                success: function(result)
                {
