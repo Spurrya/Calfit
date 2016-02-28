@@ -110,10 +110,7 @@ module.exports = function(router, mongoose, auth, graph){
                   else{
                     users.forEach(function(user, index){
                         var message = {}
-                        activity =  activities[Math.floor(Math.random() * activities.length)]
-                        message.activity = activity.activity;
-                        message.name = activity.name
-                        message.imgUrl = activity.imgUrl
+                        message.imgUrl = "cat.jpg"
                         message.firstUser = 1;
                         var str = ""
                         message.prompt = str.concat("Hi, ", user.name , " ! " , "Join ", req.params.name, " for a fun break activity!")
