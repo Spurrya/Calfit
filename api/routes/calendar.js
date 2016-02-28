@@ -54,20 +54,20 @@ module.exports = function(router, mongoose, auth, graph){
                   User.find({email : req.params.emailId}, function(err,users){
                     if (err)
                         res.json({error:err});
-                  else{
-                    users.forEach(function(user, index){
-                        var message = {}
-                        activity =  activities[Math.floor(Math.random() * activities.length)]
-                        message.activity = activity.activity;
-                        message.name = activity.name
-                        message.imgUrl = activity.imgUrl
-                        message.firstUser = 1;
-                        var str = ""
-                        message.prompt = str.concat("Hi, ", user.name , " ! " , activity.activity)
-                        console.log(message)
-                        graph.pushNotification(message, user.chromeId)
-                  })
-                }
+                    else{
+                      users.forEach(function(user, index){
+                          var message = {}
+                          activity =  activities[Math.floor(Math.random() * activities.length)]
+                          message.activity = activity.activity;
+                          message.name = activity.name
+                          message.imgUrl = activity.imgUrl
+                          message.firstUser = 1;
+                          var str = ""
+                          message.prompt = str.concat("Hi, ", user.name , " ! " , activity.activity)
+                          console.log(message)
+                          graph.pushNotification(message, user.chromeId)
+                    })
+                  }
                 });
                 }
                 else {
