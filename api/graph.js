@@ -12,16 +12,16 @@ var graph = {};
 
 // @name getUsers
 // @desc Makes a request to the Microsoft Graph for all users in the tenant.
-graph.getUsers = function (token) {
+graph.getUsers = function (token, email) {
   var deferred = Q.defer();
-  //MUST CHANGE BACK TO NE (MEANS NOT EQUAL TOO)
-  request.get("https://graph.microsoft.com/v1.0/users?$filter=mail eq '"+email+"'", {
+
+  request.get("https://graph.microsoft.com/v1.0/users?$filter=mail ne '"+email+"'", {
     'auth': {
       'bearer': token
     }
   }, function (err, response, body) {
     var parsedBody = JSON.parse(body);
-
+    console.log(parsedBody);
     if (err) {
       deferred.reject(err);
     } else if (parsedBody.error) {
@@ -46,7 +46,7 @@ graph.getUserByEmail = function (token, email) {
     }
   }, function (err, response, body) {
     var parsedBody = JSON.parse(body);
-
+    console.log(parsedBody)
     if (err) {
       deferred.reject(err);
     } else if (parsedBody.error) {

@@ -5,6 +5,7 @@ module.exports = function(router, mongoose, auth, graph){
   var moment = require('moment');
   var Activity = require('../models/activity');
   var User = require('../models/User')
+  var graph = require('../graph')
 
 
   var sender = new gcm.Sender(config.gcm);
@@ -36,7 +37,6 @@ module.exports = function(router, mongoose, auth, graph){
         // Get all of the users in the tenant.
         graph.getUserByEmail(token, req.params.emailId)
           .then(function (users) {
-
 
             // Get calendar events for users
             graph.getEvents(token, users, res).then(function(data){
@@ -85,35 +85,42 @@ module.exports = function(router, mongoose, auth, graph){
       });
   });
 
-  router.get('accepted/:email/:name', function(req, res){
+  router.get('/accepted/:emailId/:name', function(req, res){
+    // Get an access token for the app.
     auth.getAccessToken().then(function (token) {
       // Get all of the users in the tenant.
-      graph.getUsers(token)
+      graph.getUsers(token, req.params.emailId)
         .then(function (users) {
           // Get calendar events for users
           graph.getEvents(token, users, res).then(function(data){
+
             Activity.find(function(err, activity) {
+
+              //The number of entries for the collection will always remain 6.
+              //Therefore, it is safe to get all the entries. However, this is
+              //not recommended once we go above 30+ entries
               var activities = activity;
 
               if(canUserTakeBreak(data)==true){
                 res.json({message:data})
                 //bhaanu@yofit1.onmicrosoft.com
-                User.find({email : req.params.email}, function(err,users){
+                User.find({email :{ $ne: req.params.emailId}}, function(err,users){
                   if (err)
                       res.json({error:err});
-                else{
-                  users.forEach(function(user, index){
-                      var message = {}
-                      activity =  activities[Math.floor(Math.random() * activities.length)]
-                      message.activity = activity.activity;
-                      message.name = activity.name
-                      message.firstUser = 0
-                      message.imgUrl = activity.imgUrl
-                      var str = ""
-                      message.prompt = str.concat("Hi, ", user.name , " ! Join " , req.param.name ," for a work out session!")
-                      graph.pushNotification(message, user.chromeId)
-                })
-              }
+                  else{
+                    users.forEach(function(user, index){
+                        var message = {}
+                        activity =  activities[Math.floor(Math.random() * activities.length)]
+                        message.activity = activity.activity;
+                        message.name = activity.name
+                        message.imgUrl = activity.imgUrl
+                        message.firstUser = 1;
+                        var str = ""
+                        message.prompt = str.concat("Hi, ", user.name , " ! " , "Join", req.param.name, "for a fun break activity!")
+                        console.log(message)
+                        graph.pushNotification(message, user.chromeId)
+                  })
+                }
               });
               }
               else {
