@@ -14,10 +14,10 @@ $(function(){
     //Disable from further calls
     $('#submit').disabled = true;
     register(function (registrationId) {
-      var name = $('#name').val()
+      var username = $('#name').val()
       var email = $('#email').val()
 
-      chrome.storage.local.set({'name':name})
+      chrome.storage.local.set({'username':username})
       chrome.storage.local.set({'email':email})
 
       //Insert console.log or alert here to slow it down
@@ -27,7 +27,7 @@ $(function(){
            type: "POST",
            url: 'http://calfit.azurewebsites.net/api/users',
            ajax:true,
-           data: {chromeId: chromeId, name: name, email:email},
+           data: {chromeId: chromeId, name: username, email:email},
            success: function(result)
            {
              $('#success').show()

@@ -42,37 +42,59 @@ function firstTimeRegistration() {
 }
 
 
-function notificationBtnClicked(notification, ibtn) {
-  console.log(notification)
-  console.log(ibtn)
+// Event handlers for the various notification events
+function notificationClosed(notification , byuser) {
+  chrome.notifications.clear(notification, function() {
 
-  if (ibtn==0) {
-    // chrome.storage.local.get("name", function(name){
-    //   chrome.storage.local.get("email",function(email){
-    //       //call other users
-    //       var email = email
-    //       var name = name
-    //       // $.ajax({
-    //       //      url: 'http://calfit.azurewebsites.net/api/accepted/',
-    //       //      data:'{email:email, name:name}',
-    //       //      ajax:true,
-    //       //      success: function(result)
-    //       //      {
-    //       //        alert(result);
-    //       //      }
-    //       //    });
-    //   });
-    // })
+        console.log("Invite responded .");
+      });
+}
 
+function notificationClicked(notification ) {
+
+   chrome.notifications.clear(notification, function(wasCleared) {
+        console.log("Invite responded .");
+      });
+}
+
+function notificationBtnClick(notification, ibtn) {
+
+  chrome.notifications.clear(notification, function(wasCleared) {
+        console.log("Invite responded ."+ibtn);
+  });
+
+  if (ibtn=1) {
+
+      chrome.storage.local.get(["email","username"],function(result){
+          //call other users
+          var name = result.username
+          var email = result.email
+
+          $.ajax({
+               url: 'http://calfit.azurewebsites.net/api/accepted/' + email + '/'+ name,
+               ajax:true,
+               success: function(result)
+               {
+                 alert(result);
+                 console.log(url)
+               }
+             });
+      });
   }else {
-    //snooze
+    // do nothing :)
+    console.log("Your invite has not been accepted .");
   }
 }
 
-// Set up a listener for GCM message event.
 chrome.gcm.onMessage.addListener(messageReceived);
 
 // Set up listeners to trigger the first time registration.
 chrome.runtime.onInstalled.addListener(firstTimeRegistration);
 chrome.runtime.onStartup.addListener(firstTimeRegistration);
-chrome.notifications.onButtonClicked.addListener(notificationBtnClicked);
+
+// notification event listener
+
+
+chrome.notifications.onClosed.addListener(notificationClosed);
+chrome.notifications.onClicked.addListener(notificationClicked);
+chrome.notifications.onButtonClicked.addListener(notificationBtnClick);

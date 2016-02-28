@@ -8,7 +8,8 @@ var Schema = mongoose.Schema;
 var activitySchema = new Schema({
   id: Number,
   name: String,
-  activity : String
+  activity : String,
+  imgUrl: String
 });
 
 var Activity = mongoose.model('Activity', activitySchema);

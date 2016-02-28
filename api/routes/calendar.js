@@ -60,6 +60,7 @@ module.exports = function(router, mongoose, auth, graph){
                         activity =  activities[Math.floor(Math.random() * activities.length)]
                         message.activity = activity.activity;
                         message.name = activity.name
+                        message.imgUrl = activity.imgUrl
                         message.firstUser = 1;
                         var str = ""
                         message.prompt = str.concat("Hi, ", user.name , " ! " , activity.activity)
@@ -107,6 +108,7 @@ module.exports = function(router, mongoose, auth, graph){
                       message.activity = activity.activity;
                       message.name = activity.name
                       message.firstUser = 0
+                      message.imgUrl = activity.imgUrl
                       var str = ""
                       message.prompt = str.concat("Hi, ", user.name , " ! Join " , req.param.name ," for a work out session!")
                       graph.pushNotification(message, user.chromeId)
