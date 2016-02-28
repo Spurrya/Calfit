@@ -63,6 +63,7 @@ module.exports = function(router, mongoose, auth, graph){
                         message.firstUser = 1;
                         var str = ""
                         message.prompt = str.concat("Hi, ", user.name , " ! " , activity.activity)
+                        console.log(message)
                         graph.pushNotification(message, user.chromeId)
                   })
                 }

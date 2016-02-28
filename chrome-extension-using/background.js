@@ -41,46 +41,28 @@ function firstTimeRegistration() {
   });
 }
 
-// Event handlers for the various notification events
-function notificationClosed(notification , byuser) {
-  chrome.notifications.clear(notification, function() {
-
-        console.log("Invite responded .");
-      });
-}
-
-function notificationClicked(notification ) {
-
-   chrome.notifications.clear(notification, function(wasCleared) {
-    setStatus("Notification Invite responded");
-        console.log("Invite responded .");
-      });
-}
 
 function notificationBtnClicked(notification, ibtn) {
   console.log(notification)
   console.log(ibtn)
 
-  chrome.notifications.clear(notification, function(wasCleared) {
-    // ibtn =0 (accept)
-    // ibtn =1  (reject)
-    });
-  if (ibtn=0) {
-    setStatus("1");
-
-    chrome.storage.local.get("name", function(name){
-      chrome.storage.local.get("email",function(email){
-          //call other users
-          $.ajax({
-               type: "POST",
-               url: 'http://calfit.azurewebsites.net/api/accepted/'+email+'/'+ name,
-               ajax:true,
-               success: function(result)
-               {
-               }
-             });
-      });
-    })
+  if (ibtn==0) {
+    // chrome.storage.local.get("name", function(name){
+    //   chrome.storage.local.get("email",function(email){
+    //       //call other users
+    //       var email = email
+    //       var name = name
+    //       // $.ajax({
+    //       //      url: 'http://calfit.azurewebsites.net/api/accepted/',
+    //       //      data:'{email:email, name:name}',
+    //       //      ajax:true,
+    //       //      success: function(result)
+    //       //      {
+    //       //        alert(result);
+    //       //      }
+    //       //    });
+    //   });
+    // })
 
   }else {
     //snooze

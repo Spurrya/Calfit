@@ -4,7 +4,7 @@ function register(callback) {
       if (chrome.runtime.lastError) {
         return false;
       }
-      chrome.storage.local.set({registered: true});
+      chrome.storage.local.set({'registered': true});
       callback(regId);
   });
 }
@@ -17,9 +17,8 @@ $(function(){
       var name = $('#name').val()
       var email = $('#email').val()
 
-      chrome.storage.local.set({name:name})
-      chrome.storage.local.set({email:email})
-
+      chrome.storage.local.set({'name':name})
+      chrome.storage.local.set({'email':email})
 
       //Insert console.log or alert here to slow it down
       var chromeId = registrationId

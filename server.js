@@ -2,7 +2,6 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
-var nodeInspector = require('node-inspector');
 var config = require('./api/config');
 var graph = require('./api/graph');
 var auth = require('./api/auth');
