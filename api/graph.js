@@ -14,21 +14,24 @@ var graph = {};
 // @desc Makes a request to the Microsoft Graph for all users in the tenant.
 graph.getUsers = function (token, email) {
   var deferred = Q.defer();
-
-  request.get("https://graph.microsoft.com/v1.0/users?$filter=mail ne '"+email+"'", {
+  //Since 'ne' (not equal) doesn't seem to work?
+  request.get("https://graph.microsoft.com/v1.0/users/", {
     'auth': {
       'bearer': token
     }
   }, function (err, response, body) {
+
     var parsedBody = JSON.parse(body);
-    console.log(parsedBody);
-    if (err) {
-      deferred.reject(err);
-    } else if (parsedBody.error) {
-      deferred.reject(parsedBody.error.message);
-    } else {
-      // The value of the body will be an array of all users.
-      deferred.resolve(parsedBody.value);
+
+    if(parsedBody.mail != email){
+      if (err) {
+        deferred.reject(err);
+      } else if (parsedBody.error) {
+        deferred.reject(parsedBody.error.message);
+      } else {
+        // The value of the body will be an array of all users.
+        deferred.resolve(parsedBody.value);
+      }
     }
   });
 

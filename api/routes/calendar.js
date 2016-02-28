@@ -116,7 +116,7 @@ module.exports = function(router, mongoose, auth, graph){
                         message.imgUrl = activity.imgUrl
                         message.firstUser = 1;
                         var str = ""
-                        message.prompt = str.concat("Hi, ", user.name , " ! " , "Join", decodeURI(req.params.name), "for a fun break activity!")
+                        message.prompt = str.concat("Hi, ", user.name , " ! " , "Join ", req.params.name, " for a fun break activity!")
                         console.log(message)
                         graph.pushNotification(message, user.chromeId)
                   })
@@ -169,7 +169,8 @@ function canUserTakeBreak(listOfEvents){
     message.addData({
       activity: response.activity,
       name: response.name,
-      prompt: response.prompt
+      prompt: response.prompt,
+      imgUrl:response.imgUrl
     });
     sender.send(message, { registrationTokens: [chromeId] }, function (err, response) {
         if(err) console.error(err);
