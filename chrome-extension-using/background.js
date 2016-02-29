@@ -1,3 +1,6 @@
+//Saves the message sent by GCM to this extension here so that it can be accessed by button click listener
+var msg;
+
 // Returns a new notification ID used in the notification.
 function getNotificationId() {
   var id = Math.floor(Math.random() * 9007199254740992) + 1;
@@ -7,7 +10,10 @@ function getNotificationId() {
 function messageReceived(message) {
   // A message is an object with a data property that
   // consists of key-value pairs.
-
+  console.log("In messageReceived .");
+  console.log("message.data.name"+message.data.name);
+  console.log("message.data.imgUrl"+message.data.imgUrl);
+  msg=message;
   // Pop up a notification to show the GCM message.
   chrome.notifications.create(getNotificationId(), {
     title: message.data.name,
@@ -69,14 +75,15 @@ function notificationBtnClick(notification, ibtn) {
           //call other users
           var name = result.username
           var email = result.email
+          var urlTocall = encodeURI('http://calfit.azurewebsites.net/api/accepted/' + email + '/'+ name+ '/'+msg.data.activityId);
 
           $.ajax({
-               url: encodeURI('http://calfit.azurewebsites.net/api/accepted/' + email + '/'+ name),
+               url: urlTocall,
                ajax:true,
                success: function(result)
                {
-                 alert(result);
-                 console.log(url)
+                 //alert(result);
+                 console.log(urlTocall);
                }
              });
       });

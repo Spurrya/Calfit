@@ -9,5 +9,10 @@
     }
   },
   "permissions": ["gcm", "storage", "notifications", "http://calfit.azurewebsites.net/"],
-  "icons": { "128": "basketball.png" }
+  "icons": { "128": "CalFit_logo.jpg" },
+ "web_accessible_resources": [
+    "assets/img/*.jpg",
+    "*.jpg"
+  ]
+
 }
