@@ -6,6 +6,8 @@ module.exports = function(router, mongoose, auth, graph){
   var Activity = require('../models/activity');
   var User = require('../models/User')
   var graph = require('../graph')
+  var request = require('request');
+  
 
 
   var sender = new gcm.Sender(config.gcm);
@@ -41,12 +43,12 @@ module.exports = function(router, mongoose, auth, graph){
             // Get calendar events for users
             graph.getEvents(token, users, res).then(function(data){
 
-              Activity.find(function(err, activity) {
+              Activity.find(function(err, activities) {
 
                 //The number of entries for the collection will always remain 6.
                 //Therefore, it is safe to get all the entries. However, this is
                 //not recommended once we go above 30+ entries
-                var activities = activity;
+                //var activities = activity;
 
                 if(canUserTakeBreak(data)==true){
                   res.json({message:data})
@@ -57,13 +59,16 @@ module.exports = function(router, mongoose, auth, graph){
                     else{
                       users.forEach(function(user, index){
                           var message = {}
-                          activity =  activities[Math.floor(Math.random() * activities.length)]
+                          var activity =  activities[Math.floor(Math.random() * activities.length)]
                           message.activity = activity.activity;
                           message.name = activity.name
                           message.imgUrl = activity.imgUrl
                           message.firstUser = 1;
                           var str = ""
                           message.prompt = str.concat("Hi, ", user.name , " ! " , activity.activity)
+                          //this activity id will be sent back in the url so that we use same activity details in 
+                          //calendar appointment details and informing others of type of activity
+                          message.activityId = activity._id;
                           console.log(message)
                           graph.pushNotification(message, user.chromeId)
                     })
@@ -85,21 +90,49 @@ module.exports = function(router, mongoose, auth, graph){
       });
   });
 
-  router.get('/accepted/:emailId/:name', function(req, res){
+  router.get('/accepted/:emailId/:name/:activityId', function(req, res){
+    
     // Get an access token for the app.
     auth.getAccessToken().then(function (token) {
       // Get all of the users in the tenant.
       graph.getUsers(token, req.params.emailId)
         .then(function (users) {
+          console.error('>>>req.body.emailId='+req.params.emailId)
+          //Get the relevant user first
+          users.forEach(function(user, index){
+            console.error('>>> Entered users.foreach mail='+user.mail);
+            if(user.mail==req.params.emailId)
+            {
+              console.error('>>> matched mailid in foreach');              
+              
+              //getting activity details so that same will be set in calendar invite also
+              Activity.findById(req.params.activityId,function(err, activityRec) {
+              var event = fillEventDetails(req,activityRec);
+              console.error('>>> event details: ' + event);
+              createCalEvent(token,user,event);
+              });
+
+              
+               
+            }
+            else
+            {
+              console.error('>>> did Not match mailid in foreach');
+            }
+          }); 
+          
           // Get calendar events for users
           graph.getEvents(token, users, res).then(function(data){
 
-            Activity.find(function(err, activity) {
 
+            Activity.findById(req.params.activityId,function(err, activityRec) {
+
+              console.error('>>> activity find call back activity='+activityRec);
+              
               //The number of entries for the collection will always remain 6.
               //Therefore, it is safe to get all the entries. However, this is
               //not recommended once we go above 30+ entries
-              var activities = activity;
+              //var activities = activity;
 
               if(canUserTakeBreak(data)==true){
                 res.json({message:data})
@@ -110,10 +143,12 @@ module.exports = function(router, mongoose, auth, graph){
                   else{
                     users.forEach(function(user, index){
                         var message = {}
-                        message.imgUrl = "cat.jpg"
+                        message.name = activityRec.name;
+                        message.imgUrl = activityRec.imgUrl;
                         message.firstUser = 1;
-                        var str = ""
-                        message.prompt = str.concat("Hi, ", user.name , " ! " , "Join ", req.params.name, " for a fun break activity!")
+                        var str = "";
+                        message.prompt = str.concat("Hi, ", user.name , " ! " , "Join ", req.params.name, " for "+ activityRec.activity);
+                        message.activityId = activityRec._id;
                         console.log(message)
                         graph.pushNotification(message, user.chromeId)
                   })
@@ -125,7 +160,7 @@ module.exports = function(router, mongoose, auth, graph){
               }
             });
 
-          })
+          });
 
         }, function (error) {
           console.error('>>> Error getting calendar events for users: ' + error);
@@ -133,7 +168,7 @@ module.exports = function(router, mongoose, auth, graph){
     }, function (error) {
       console.error('>>> Error getting access token: ' + error);
     });
-  })
+  });
 
 /*
   Returns a boolean value whether the user CAN take a break
@@ -167,12 +202,91 @@ function canUserTakeBreak(listOfEvents){
       activity: response.activity,
       name: response.name,
       prompt: response.prompt,
-      imgUrl:response.imgUrl
+      imgUrl:response.imgUrl,
+      activityId:response.activityId
     });
     sender.send(message, { registrationTokens: [chromeId] }, function (err, response) {
         if(err) console.error(err);
     });
-  }
-  module.exports = graph;
+  };
+  
+// @name fillEventDetails
+// @desc Creates an event variable and fills necessary data
+// @param req rest api request with all necessary parameters  
+function fillEventDetails(req,activityRec) {
+    console.error('>>> Fill event details entered ');
+    // The new event will be 10 minutes and take place today at the current time.
+    var startTime = new Date();
+    startTime.setDate(startTime.getDate());
+    var endTime = new Date(startTime.getTime() + 10 * 60000);
+    // we are using todays date . 
+
+      // These are the fields of the new calendar event.
+    var newEvent = {
+      Subject: "Break: "+activityRec.activity,
+      Location: {
+        DisplayName: "Healthy Land ;-)"
+      },
+      Start: {
+        'DateTime': startTime,
+        'TimeZone': 'PST'
+      },
+      End: {
+        'DateTime': endTime,
+        'TimeZone': 'PST'
+      },
+      "ShowAs":"Oof",
+      Body: {
+        Content: '<html> <head></head> <body><p>'+activityRec.name+' '+activityRec.activity +'</p>' +'<img src="http://thumbs.dreamstime.com/z/business-man-suit-walking-beach-13321410.jpg" height="70" width="42" </body> </html>',
+        ContentType: 'HTML'
+      }
+    };
+    
+    return newEvent;
 
 }
+
+// @name createEvent
+// @desc Creates an event on a user's calendar.
+// @param token The app's access token.
+// @param user An user in the tenant.
+function createCalEvent(token, user,newEvent) {
+   console.error('>>> Entered createCalEvent function');
+
+    // Add an event to the current user's calendar.
+    request.post({
+      url: 'https://graph.microsoft.com/v1.0/users/' + user.id + '/events',
+      headers: {
+        'content-type': 'application/json',
+        'authorization': 'Bearer ' + token,
+        'displayName': user.displayName
+      },
+      body: JSON.stringify(newEvent)
+    }, function (err, response, body) {
+      console.error('>>> Entered callback of Pst to graph');
+      if (err) {
+        console.error('>>> Application error: ' + err);
+      } else {
+        var parsedBody = JSON.parse(body);
+        var displayName = response.request.headers.displayName;
+
+        if (parsedBody.error) {
+          if (parsedBody.error.code === 'RequestBroker-ParseUri') {
+            console.error('>>> Error creating an event for ' + displayName  + '. Most likely due to this user having a MSA instead of an Office 365 account.');
+          } else {
+            console.error('>>> Error creating an event for ' + displayName  + '.' + parsedBody.error.message);
+          }
+        } else {
+          console.log('>>> Successfully created an event on ' + displayName + "'s calendar.");
+          console.error('>>> Successfully created an event on ' + displayName + "'s calendar.");
+        }
+      }
+    });
+
+}; 
+
+
+  
+  module.exports = graph;
+
+};
