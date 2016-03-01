@@ -9,7 +9,7 @@
     }
   },
   "permissions": ["gcm", "storage", "notifications", "http://calfit.azurewebsites.net/"],
-  "icons": { "128": "CalFit_logo.jpg" },
+  "icons": { "128": "CalFit_logo.png" },
  "web_accessible_resources": [
     "assets/img/*.jpg",
     "*.jpg"
