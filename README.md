@@ -32,3 +32,7 @@ You must be registered as a user in our Azure Active Directory to be able to use
 
 The API is currently being hosted on Microsoft Azure and will be available only till 20th March 2016. Please contact me (spurrya@gmail.com) if you are interested in using this product AFTER 20th March 2016.
 
+#Demo
+
+http://devpost.com/software/yofit
+
