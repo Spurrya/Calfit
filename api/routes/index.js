@@ -1,3 +1,4 @@
+//Author: Spurrya Jaggi
 module.exports = function(router, mongoose, auth){
   var User = require('../models/User');
   var config = require('../config')
